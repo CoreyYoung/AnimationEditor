@@ -12,6 +12,7 @@ import javax.swing.tree.DefaultTreeModel;
 import org.yaml.snakeyaml.Yaml;
 
 public class AnimationEditorGUI extends javax.swing.JFrame {
+
     /**
      * Creates new form NewJFrame
      */
@@ -36,6 +37,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         btnRemoveBone = new javax.swing.JButton();
         btnSetParent = new javax.swing.JButton();
         btnResetParent = new javax.swing.JButton();
+        btnRenameBone = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        animationFrame = new javax.swing.JInternalFrame();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSaveSkeleton = new javax.swing.JMenuItem();
@@ -75,6 +79,20 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         });
 
+        btnRenameBone.setText("Rename bone");
+        btnRenameBone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRenameBoneActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Rotate Bone");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -82,13 +100,19 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddBone)
-                    .addComponent(btnSetParent))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRemoveBone)
-                    .addComponent(btnResetParent))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnRenameBone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddBone)
+                            .addComponent(btnSetParent))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnResetParent, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnRemoveBone, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,11 +121,28 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddBone)
                     .addComponent(btnRemoveBone))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSetParent)
                     .addComponent(btnResetParent))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRenameBone)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        animationFrame.setVisible(true);
+
+        javax.swing.GroupLayout animationFrameLayout = new javax.swing.GroupLayout(animationFrame.getContentPane());
+        animationFrame.getContentPane().setLayout(animationFrameLayout);
+        animationFrameLayout.setHorizontalGroup(
+            animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 338, Short.MAX_VALUE)
+        );
+        animationFrameLayout.setVerticalGroup(
+            animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -136,7 +177,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(401, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(animationFrame)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -144,11 +187,14 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(animationFrame)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -156,7 +202,12 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoneActionPerformed
-        String boneName = "Bone " + (Skeleton.totalBones + 1);
+        String boneName = "Bone 0";
+
+        for (int i = 0; Skeleton.getBone(boneName) != null; i++) {
+            boneName = "Bone " + i;
+        }
+
         Bone bone = new Bone(boneName, 0, 0, 0, 0);
         Skeleton.boneList.add(bone);
 
@@ -164,23 +215,21 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddBoneActionPerformed
 
     private void btnRemoveBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveBoneActionPerformed
-        if (boneTree.getLastSelectedPathComponent() != null) {
-            String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
-            
-            Skeleton.removeBone(selectedBoneName);
-            
+        Bone bone = getSelectedBone();
+
+        if (bone != null) {
+            Skeleton.removeBone(bone.name);
             updateTree();
         }
     }//GEN-LAST:event_btnRemoveBoneActionPerformed
 
     private void btnSetParentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetParentActionPerformed
-        if (boneTree.getLastSelectedPathComponent() != null) {
-            String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
+        Bone child = getSelectedBone();
+
+        if (child != null) {
             String parentName = JOptionPane.showInputDialog("Enter Parent Name:");
-            
             Bone parent = Skeleton.getBone(parentName);
-            Bone child = Skeleton.getBone(selectedBoneName);
-            
+
             if (parentName != null) {
                 if (parent == null) {
                     JOptionPane.showMessageDialog(null,
@@ -190,42 +239,37 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 } else if (child.getDescendant(parentName) != null) {
                     JOptionPane.showMessageDialog(null, "Error: Parent cannot be descendant of child!");
                 } else {
-                    Skeleton.removeBone(selectedBoneName);
+                    Skeleton.removeBone(child.name);
 
                     parent.childList.add(child);
                     updateTree();
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Error: No Bone selected!");
         }
     }//GEN-LAST:event_btnSetParentActionPerformed
 
     private void btnResetParentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetParentActionPerformed
-        if (boneTree.getLastSelectedPathComponent() != null) {
-            String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
-            Bone bone = Skeleton.getBone(selectedBoneName);
-            
-            if (Skeleton.getBone(selectedBoneName) != null) {
-                Skeleton.removeBone(selectedBoneName);
-                Skeleton.boneList.add(bone);
-            }
-            
+        Bone bone = getSelectedBone();
+
+        if (bone != null) {
+            Skeleton.removeBone(bone.name);
+            Skeleton.boneList.add(bone);
             updateTree();
         }
     }//GEN-LAST:event_btnResetParentActionPerformed
 
     private void btnSaveSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSkeletonActionPerformed
         try (FileWriter fileWriter = new FileWriter("test.skeleton")) {
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            
-            ArrayList<HashMap> boneList = Skeleton.getBoneList();
-            Yaml yaml = new Yaml();
-            
-            bufferedWriter.write(yaml.dump(boneList));
-            
-            bufferedWriter.close();
-            fileWriter.close();
+            try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+
+                ArrayList<HashMap> boneList = Skeleton.getBoneList();
+                Yaml yaml = new Yaml();
+
+                bufferedWriter.write(yaml.dump(boneList));
+
+                bufferedWriter.close();
+                fileWriter.close();
+            }
         } catch (IOException e) {
             System.err.println(e);
         }
@@ -237,26 +281,45 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             ArrayList<HashMap> fileList = (ArrayList<HashMap>) yaml.load(fileReader);
             Skeleton.setBoneList(fileList);
             updateTree();
-            
+
         } catch (IOException e) {
             System.err.println(e);
         }
     }//GEN-LAST:event_btnLoadSkeletonActionPerformed
 
-    public static void main(String args[]) {
-        Bone bone1 = new Bone("Test Bone 1", 0, 0, 0, 0);
-        Bone bone2 = new Bone("Test bone 2", 0, 0, 0, 0);
-        Bone bone3 = new Bone("Test bone 3", 0, 0, 0, 0);
-        Bone bone4 = new Bone("Test bone 4", 0, 0, 0, 0);
-        Skeleton.boneList.add(bone1);
-        bone1.childList.add(bone2);
-        bone2.childList.add(bone3);
-        bone3.childList.add(bone4);
+    private void btnRenameBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenameBoneActionPerformed
+        Bone bone = getSelectedBone();
 
+        if (bone != null) {
+            String newName = JOptionPane.showInputDialog("Enter New Name:");
+
+            if (Skeleton.getBone(newName) == null) {
+                bone.name = newName;
+            }
+
+            updateTree();
+        }
+    }//GEN-LAST:event_btnRenameBoneActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Bone bone = getSelectedBone();
+
+        if (bone != null) {
+            String input = JOptionPane.showInputDialog("Enter New Direction (Degrees):");
+            try {
+                int newDirection = Integer.parseInt(input);
+                bone.setDirection(newDirection);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Invalid Input!");
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -288,30 +351,49 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private void updateTree() {
         DefaultTreeModel model = (DefaultTreeModel) boneTree.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-        
+
         root.removeAllChildren();
 
         for (Bone bone : Skeleton.boneList) {
             DefaultMutableTreeNode node = bone.getTreeBranch();
-            
             root.add(node);
         }
 
         model.nodeStructureChanged(root);
-        
-        for (int i = 0; i < boneTree.getRowCount(); i ++) {
+
+        for (int i = 0; i < boneTree.getRowCount(); i++) {
             boneTree.expandRow(i);
         }
     }
 
+    private Bone getSelectedBone() {
+        if (boneTree.getLastSelectedPathComponent() != null) {
+            String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
+            Bone bone = Skeleton.getBone(selectedBoneName);
+
+            if (bone == null) {
+                JOptionPane.showMessageDialog(null, "Error: No bone selected!");
+            }
+
+            return bone;
+        }
+
+        JOptionPane.showMessageDialog(null, "Error: No bone selected!");
+
+        return null;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JInternalFrame animationFrame;
     private javax.swing.JTree boneTree;
     private javax.swing.JButton btnAddBone;
     private javax.swing.JMenuItem btnLoadSkeleton;
     private javax.swing.JButton btnRemoveBone;
+    private javax.swing.JButton btnRenameBone;
     private javax.swing.JButton btnResetParent;
     private javax.swing.JMenuItem btnSaveSkeleton;
     private javax.swing.JButton btnSetParent;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

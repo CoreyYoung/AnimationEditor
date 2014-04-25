@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public abstract class Skeleton {
-
-    public static int totalBones = 0;
     public static int x = 64;
     public static int y = 32;
     public static ArrayList<Bone> boneList = new ArrayList<>();
