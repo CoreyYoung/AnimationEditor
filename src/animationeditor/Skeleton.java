@@ -59,12 +59,10 @@ public abstract class Skeleton {
     
     private static Bone loadBoneFromMap(HashMap<String, Object> boneMap) {
         String name = (String) boneMap.get("Name");
-        int x = (int) boneMap.get("X");
-        int y = (int) boneMap.get("Y");
         int dir = (int) boneMap.get("Direction");
         int length = (int) boneMap.get("Length");
         
-        Bone bone = new Bone(name, x, y, dir, length);
+        Bone bone = new Bone(name, dir, length);
         
         ArrayList<HashMap> childMapList = (ArrayList<HashMap>) boneMap.get("Child Map");
         ArrayList<Bone> childList = new ArrayList<>();

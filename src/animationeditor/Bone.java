@@ -1,36 +1,49 @@
 package animationeditor;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.swing.JInternalFrame;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Bone {
 
-    BoneImage boneImage;
-    String name;
-    int x, y, dir, length;
-    ArrayList<Bone> childList = new ArrayList<>();
+    public Image image;
+    public String name;
+    public int dir, length;
+    public ArrayList<Bone> childList = new ArrayList<>();
 
-    public Bone(String name, int x, int y, int dir, int length) {
-        this.x = x;
-        this.y = y;
+    public Bone(String name, int dir, int length) {
+        image = Toolkit.getDefaultToolkit().getImage("data/Bone.png");
         this.dir = dir;
-        this.length = length;
+        this.length = 32;
         this.name = name;
 
-        JInternalFrame frame = AnimationEditorGUI.animationFrame;
+        
+    }
 
-        boneImage = new BoneImage("data/Bone.png");
-        frame.setContentPane(boneImage);
-        frame.setVisible(true);
+    public void drawBone(Graphics2D g2d, int x, int y, int dir) {
+        dir += this.dir;
+
+        AffineTransform oldTransform = g2d.getTransform();
+        g2d.translate(x, y);
+        g2d.rotate(Math.toRadians(-dir));
+        g2d.drawImage(image, 0, 0, 8, 32, null);
+        g2d.setTransform(oldTransform);
+
+        for (Bone child : childList) {
+            int endX = x + (int) (length * Math.sin(Math.toRadians(dir)));
+            int endY = y + (int) (length * Math.cos(Math.toRadians(dir)));
+
+            child.drawBone(g2d, endX, endY, dir);
+        }
     }
 
     public void setDirection(int dir) {
         this.dir = dir;
-        boneImage.direction = dir;
-
         AnimationEditorGUI.animationFrame.repaint();
     }
 
@@ -79,10 +92,8 @@ public class Bone {
         HashMap<String, Object> boneMap = new HashMap<>();
 
         boneMap.put("Name", name);
-        boneMap.put("X", x);
-        boneMap.put("Y", x);
-        boneMap.put("Direction", x);
-        boneMap.put("Length", x);
+        boneMap.put("Direction", dir);
+        boneMap.put("Length", length);
 
         ArrayList<HashMap> childMap = new ArrayList<>();
 
