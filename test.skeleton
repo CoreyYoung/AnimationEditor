@@ -1,0 +1,40 @@
+- Name: Bone 4
+  Image Path: data/Bone.png
+  Child Map:
+  - Name: RightLeg
+    Image Path: data/Bone.png
+    Child Map:
+    - Name: Bone 1
+      Image Path: data/Bone.png
+      Child Map: []
+      Direction: -10
+    Direction: 30
+  - Name: LeftLeg
+    Image Path: data/Bone.png
+    Child Map:
+    - Name: Bone 3
+      Image Path: data/Bone.png
+      Child Map: []
+      Direction: -20
+    Direction: -20
+  Direction: 0
+- Name: RightArm
+  Image Path: data/Bone.png
+  Child Map:
+  - Name: Bone 8
+    Image Path: data/Bone.png
+    Child Map: []
+    Direction: -30
+  Direction: 45
+- Name: LeftArm
+  Image Path: data/Bone.png
+  Child Map:
+  - Name: Bone 9
+    Image Path: data/Bone.png
+    Child Map: []
+    Direction: 30
+  Direction: -45
+- Name: Head
+  Image Path: data/Bone.png
+  Child Map: []
+  Direction: 200

@@ -10,28 +10,30 @@ import java.util.Iterator;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Bone {
-
+    public static final String DEFAULT_IMAGE_PATH = "data/Bone.png";
+    public String imagePath;
     public Image image;
     public String name;
-    public int dir, length;
+    public int dir;
     public ArrayList<Bone> childList = new ArrayList<>();
 
-    public Bone(String name, int dir, int length) {
-        image = Toolkit.getDefaultToolkit().getImage("data/Bone.png");
+    public Bone(String name, String imagePath, int dir) {
+        this.imagePath = imagePath;
+        image = Toolkit.getDefaultToolkit().getImage(imagePath);
         this.dir = dir;
-        this.length = 32;
         this.name = name;
-
-        
     }
 
     public void drawBone(Graphics2D g2d, int x, int y, int dir) {
+        int width = image.getWidth(null);
+        int length = image.getHeight(null);
         dir += this.dir;
 
         AffineTransform oldTransform = g2d.getTransform();
         g2d.translate(x, y);
         g2d.rotate(Math.toRadians(-dir));
-        g2d.drawImage(image, 0, 0, 8, 32, null);
+        g2d.translate(-width / 2, 0);
+        g2d.drawImage(image, 0, 0, width, length, null);
         g2d.setTransform(oldTransform);
 
         for (Bone child : childList) {
@@ -93,7 +95,7 @@ public class Bone {
 
         boneMap.put("Name", name);
         boneMap.put("Direction", dir);
-        boneMap.put("Length", length);
+        boneMap.put("Image Path", imagePath);
 
         ArrayList<HashMap> childMap = new ArrayList<>();
 

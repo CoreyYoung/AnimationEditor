@@ -1,5 +1,7 @@
 package animationeditor;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,13 +58,21 @@ public abstract class Skeleton {
             boneList.add(loadBoneFromMap(boneMap));
         }
     }
+
+    public static void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        for (Bone bone : boneList) {
+            bone.drawBone(g2d, x, y, 0);
+        }
+    }
     
     private static Bone loadBoneFromMap(HashMap<String, Object> boneMap) {
         String name = (String) boneMap.get("Name");
+        String imagePath = (String) boneMap.get("Image Path");
         int dir = (int) boneMap.get("Direction");
-        int length = (int) boneMap.get("Length");
         
-        Bone bone = new Bone(name, dir, length);
+        Bone bone = new Bone(name, imagePath, dir);
         
         ArrayList<HashMap> childMapList = (ArrayList<HashMap>) boneMap.get("Child Map");
         ArrayList<Bone> childList = new ArrayList<>();

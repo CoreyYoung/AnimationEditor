@@ -14,13 +14,10 @@ import org.yaml.snakeyaml.Yaml;
 
 public class AnimationEditorGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
-    public static BoneImage boneImage;
+    public static SkeletonPanel skeletonPanel;
 
     public AnimationEditorGUI() {
-        boneImage = new BoneImage();
+        skeletonPanel = new SkeletonPanel();
 
         initComponents();
         updateTree();
@@ -144,7 +141,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         animationFrame.getContentPane().setLayout(animationFrameLayout);
         animationFrameLayout.setHorizontalGroup(
             animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
+            .addGap(0, 327, Short.MAX_VALUE)
         );
         animationFrameLayout.setVerticalGroup(
             animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,7 +211,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             boneName = "Bone " + i;
         }
 
-        Bone bone = new Bone(boneName, 0, 0);
+        Bone bone = new Bone(boneName, Bone.DEFAULT_IMAGE_PATH, 0);
         Skeleton.boneList.add(bone);
 
         updateTree();
@@ -377,7 +374,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
     public static void redrawSkeleton() {
         JInternalFrame frame = animationFrame;
-        frame.setContentPane(boneImage);
+        frame.setContentPane(skeletonPanel);
         frame.setVisible(true);
     }
 
