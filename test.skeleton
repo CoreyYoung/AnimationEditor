@@ -1,35 +1,35 @@
-- Name: Bone 4
-  Image Path: data/Bone.png
+- Name: Body
+  Image Path: /media/mint/COREY'S USB/Untitled Folder/NetBeansProjects/AnimationEditor/data/Body.png
   Child Map:
-  - Name: RightLeg
-    Image Path: data/Bone.png
+  - Name: RightUpperLeg
+    Image Path: /media/mint/COREY'S USB/Untitled Folder/NetBeansProjects/AnimationEditor/data/UpperLeg.png
     Child Map:
-    - Name: Bone 1
-      Image Path: data/Bone.png
+    - Name: RightLowerLeg
+      Image Path: /media/mint/COREY'S USB/Untitled Folder/NetBeansProjects/AnimationEditor/data/LowerLeg.png
       Child Map: []
       Direction: -10
     Direction: 30
-  - Name: LeftLeg
-    Image Path: data/Bone.png
+  - Name: LeftUpperLeg
+    Image Path: /media/mint/COREY'S USB/Untitled Folder/NetBeansProjects/AnimationEditor/data/UpperLeg.png
     Child Map:
-    - Name: Bone 3
-      Image Path: data/Bone.png
+    - Name: LeftLowerLeg
+      Image Path: /media/mint/COREY'S USB/Untitled Folder/NetBeansProjects/AnimationEditor/data/LowerLeg.png
       Child Map: []
       Direction: -20
     Direction: -20
   Direction: 0
-- Name: RightArm
+- Name: RightUpperArm
   Image Path: data/Bone.png
   Child Map:
-  - Name: Bone 8
+  - Name: RightLowerArm
     Image Path: data/Bone.png
     Child Map: []
     Direction: -30
   Direction: 45
-- Name: LeftArm
+- Name: LeftUpperArm
   Image Path: data/Bone.png
   Child Map:
-  - Name: Bone 9
+  - Name: LeftLowerArm
     Image Path: data/Bone.png
     Child Map: []
     Direction: 30

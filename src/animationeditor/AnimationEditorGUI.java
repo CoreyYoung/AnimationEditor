@@ -6,8 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import org.yaml.snakeyaml.Yaml;
@@ -15,13 +17,18 @@ import org.yaml.snakeyaml.Yaml;
 public class AnimationEditorGUI extends javax.swing.JFrame {
 
     public static SkeletonPanel skeletonPanel;
+    public static Timer timer;
+    public static Listener listener;
+    public static int frame = 0;
 
     public AnimationEditorGUI() {
         skeletonPanel = new SkeletonPanel();
+        listener = new Listener();
+        timer = new Timer(1000/60, listener);
+        timer.start();
 
         initComponents();
         updateTree();
-        redrawSkeleton();
     }
 
     /**
@@ -42,6 +49,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         btnResetParent = new javax.swing.JButton();
         btnRenameBone = new javax.swing.JButton();
         btnRotateBone = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         animationFrame = new javax.swing.JInternalFrame();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -96,6 +104,13 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Set Image");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -104,18 +119,23 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnRenameBone)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(btnRotateBone))
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddBone)
-                            .addComponent(btnSetParent))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnResetParent, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRemoveBone, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnRenameBone)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addComponent(btnRotateBone))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAddBone)
+                                    .addComponent(btnSetParent))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnResetParent, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnRemoveBone, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addContainerGap(34, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,6 +152,8 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRenameBone)
                     .addComponent(btnRotateBone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -141,7 +163,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         animationFrame.getContentPane().setLayout(animationFrameLayout);
         animationFrameLayout.setHorizontalGroup(
             animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 327, Short.MAX_VALUE)
+            .addGap(0, 481, Short.MAX_VALUE)
         );
         animationFrameLayout.setVerticalGroup(
             animationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +204,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(animationFrame)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -190,14 +212,14 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(animationFrame)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -315,9 +337,21 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: Invalid Input!");
             }
         }
-
-        redrawSkeleton();
     }//GEN-LAST:event_btnRotateBoneActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Bone bone = getSelectedBone();
+        
+        if (bone != null) {
+            String dataDir = System.getProperty("user.dir") + "/data";
+            JFileChooser fileChooser = new JFileChooser(dataDir);
+            
+            fileChooser.showOpenDialog(null);
+            
+            String path = fileChooser.getSelectedFile().getPath();
+            bone.setImage(path);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -368,8 +402,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         for (int i = 0; i < boneTree.getRowCount(); i++) {
             boneTree.expandRow(i);
         }
-
-        redrawSkeleton();
     }
 
     public static void redrawSkeleton() {
@@ -406,6 +438,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRotateBone;
     private javax.swing.JMenuItem btnSaveSkeleton;
     private javax.swing.JButton btnSetParent;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

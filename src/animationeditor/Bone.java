@@ -18,8 +18,7 @@ public class Bone {
     public ArrayList<Bone> childList = new ArrayList<>();
 
     public Bone(String name, String imagePath, int dir) {
-        this.imagePath = imagePath;
-        image = Toolkit.getDefaultToolkit().getImage(imagePath);
+        setImage(imagePath);
         this.dir = dir;
         this.name = name;
     }
@@ -47,6 +46,11 @@ public class Bone {
     public void setDirection(int dir) {
         this.dir = dir;
         AnimationEditorGUI.animationFrame.repaint();
+    }
+    
+    public void setImage(String imagePath) {
+        this.imagePath = imagePath;
+        image = Toolkit.getDefaultToolkit().getImage(imagePath);
     }
 
     public Bone getDescendant(String name) {
