@@ -1,3 +1,4 @@
+1000:
 - Name: Head
   Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
   Child Map:

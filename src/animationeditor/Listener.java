@@ -8,6 +8,7 @@ public class Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         AnimationEditorGUI.redrawSkeleton();
-        AnimationEditorGUI.frame ++;
+       
+        // TODO Fix this
     }
 }

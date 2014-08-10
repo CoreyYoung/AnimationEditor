@@ -22,8 +22,34 @@ public class Bone {
         this.dir = dir;
         this.name = name;
     }
+    
+    public Bone(String name, int dir) {
+        setImage(DEFAULT_IMAGE_PATH);
+        this.dir = dir;
+        this.name = name;
+    }
 
     public void drawBone(Graphics2D g2d, int x, int y, int dir) {
+        /*if (! Skeleton.frameMap.isEmpty()) {
+            
+            int currentFrame = AnimationEditorGUI.frame*1000/60;
+            int nextFrame = Integer.MAX_VALUE;
+            
+            int rotation = 180;
+            
+            for (int key : Skeleton.frameMap.keySet()) {
+                if (currentFrame < key && key < nextFrame) {
+                    nextFrame = key;
+                }
+            }
+            
+            if (nextFrame != Integer.MAX_VALUE) {
+                dir = (int) ((float) rotation / ((float) nextFrame / (float) currentFrame));
+            }
+            
+            
+        }*/
+        
         int width = image.getWidth(null);
         int length = image.getHeight(null);
         dir += this.dir;
@@ -45,7 +71,7 @@ public class Bone {
 
     public void setDirection(int dir) {
         this.dir = dir;
-        AnimationEditorGUI.animationFrame.repaint();
+        AnimationEditorGUI.DisplayFrame.repaint();
     }
     
     public void setImage(String imagePath) {
@@ -110,5 +136,21 @@ public class Bone {
         boneMap.put("Child Map", childMap);
 
         return boneMap;
+    }
+    
+    public Bone getParent() {
+        for (Bone bone : Skeleton.boneList) {
+            while (! bone.childList.contains(this)) {
+                for (Bone child : bone.childList) {
+                    if (child.getDescendant(name) != null) {
+                        bone = child;
+                    }
+                }
+            }
+            
+            return bone;
+        }
+        
+        return null; //This shouldn't ever happen.
     }
 }
