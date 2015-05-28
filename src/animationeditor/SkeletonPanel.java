@@ -7,10 +7,11 @@ public class SkeletonPanel extends JPanel {
 
 	/**
 	 * renders the skeleton.
+	 *
 	 * @param g The graphics object responsible for drawing the skeleton.
 	 */
-    @Override
-    public void paintComponent(Graphics g) {
-        Skeleton.render(g);
-    }
+	@Override
+	public void paintComponent(Graphics g) {
+		Skeleton.render(g);
+	}
 }
