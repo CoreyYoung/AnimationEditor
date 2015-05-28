@@ -22,6 +22,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     public static int time = 0;
     public static AnimationEditorGUI self;
 
+	/**
+	 * Initialises the program.
+	 */
     public AnimationEditorGUI() {
         skeletonPanel = new SkeletonPanel();
         listener = new Listener();
@@ -474,12 +477,18 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         });
     }
 
+	/**
+	 * Redraws the skeleton.
+	 */
     public static void redrawSkeleton() {
         JInternalFrame frame = DisplayFrame;
         frame.setContentPane(skeletonPanel);
         frame.setVisible(true);
     }
     
+	/**
+	 * Updates the GUI bone list so that the structure matches the skeleton object.
+	 */
     private void updateBoneTree() {
         DefaultTreeModel model = (DefaultTreeModel) boneTree.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -498,6 +507,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         }
     }
     
+	/**
+	 * Updates the GUI KeyFrame list so that it matches the animation object.
+	 */
     private void updateFrameTree() {
         DefaultTreeModel model = (DefaultTreeModel) frameTree.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -516,6 +528,11 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         }
     }
     
+	/**
+	 * Saves a string to a Yaml file.
+	 * @param fileName The name of the saved file.
+	 * @param fileContents The contents to save to the file.
+	 */
     private void saveYaml(String fileName, String fileContents) {
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
@@ -530,6 +547,10 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         }
     }
 
+	/**
+	 * Gets the bone currently selected in the GUI bone list.
+	 * @return The selected bone.
+	 */
     private Bone getSelectedBone() {
         if (boneTree.getLastSelectedPathComponent() != null) {
             String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();

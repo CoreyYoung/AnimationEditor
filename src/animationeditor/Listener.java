@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 
 public class Listener implements ActionListener {
 
+	/**
+	 * Redraws the skeleton.
+	 * @param ae The ActionEvent.
+	 */
     @Override
     public void actionPerformed(ActionEvent ae) {
         AnimationEditorGUI.redrawSkeleton();

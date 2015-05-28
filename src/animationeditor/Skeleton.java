@@ -11,6 +11,10 @@ public abstract class Skeleton {
     public static int y = 32;
     public static ArrayList<Bone> boneList = new ArrayList<>();
     
+	/**
+	 * Removes a bone from the skeleton.
+	 * @param name The name of the bone to remove.
+	 */
     public static void removeBone(String name) {
         Iterator iterator = boneList.iterator();
         
@@ -25,6 +29,11 @@ public abstract class Skeleton {
         }
     }
     
+	/**
+	 * Gets a bone from the skeleton.
+	 * @param name The name of the bone to get.
+	 * @return Returns the bone with the given name if found, otherwise returns null.
+	 */
     public static Bone getBone(String name) {
         for (Bone bone : boneList) {
             if (bone.name.equals(name)) {
@@ -41,6 +50,10 @@ public abstract class Skeleton {
         return null;
     }
     
+	/**
+	 * Gets a List of all bones, with bones stored in nested HashMaps.
+	 * @return Returns an ArrayList<HashMap>, where HashMap is type HashMap<Object>.
+	 */
     public static ArrayList<HashMap> getBoneList() {
         ArrayList<HashMap> mapList = new ArrayList<>();
         
@@ -51,6 +64,10 @@ public abstract class Skeleton {
         return mapList;
     }
     
+	/**
+	 * Replaces all bones in skeleton with bones data passed in a List<HashMap>.
+	 * @param fileMap An ArrayList<HashMap> which contains all the bones data.
+	 */
     public static void setBoneList(ArrayList<HashMap> fileMap) {
         boneList.clear();
         
@@ -59,6 +76,10 @@ public abstract class Skeleton {
         }
     }
 
+	/**
+	 * Renders the Skeleton.
+	 * @param g The Graphics object that draws the Skeleton.
+	 */
     public static void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -67,6 +88,11 @@ public abstract class Skeleton {
         }
     }
     
+	/**
+	 * Loads a bone from data stored in a HashMap.
+	 * @param boneMap A HashMap<String, Object> that contains the bone's data.
+	 * @return The bone that was loaded.
+	 */
     private static Bone loadBoneFromMap(HashMap<String, Object> boneMap) {
         String name = (String) boneMap.get("Name");
         String imagePath = (String) boneMap.get("Image Path");
