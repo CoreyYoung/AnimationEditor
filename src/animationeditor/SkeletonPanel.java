@@ -12,6 +12,6 @@ public class SkeletonPanel extends JPanel {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		Skeleton.render(g);
+		AnimationEditorGUI.skeleton.render(g);
 	}
 }

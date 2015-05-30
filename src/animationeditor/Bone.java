@@ -196,8 +196,8 @@ public class Bone {
 	 *
 	 * @return The parent bone.
 	 */
-	public Bone getParent() {
-		for (Bone bone : Skeleton.boneList) {
+	public Bone getParent(Skeleton skeleton) {
+		for (Bone bone : skeleton.boneList) {
 			while (!bone.childList.contains(this)) {
 				for (Bone child : bone.childList) {
 					if (child.getDescendant(name) != null) {

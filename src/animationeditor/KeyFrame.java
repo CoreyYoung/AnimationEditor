@@ -2,15 +2,18 @@ package animationeditor;
 
 public class KeyFrame {
 
-	private int time;
+	private final int time;
+	private final Skeleton skeleton;
 
 	/**
 	 * Creates a KeyFrame at the given time.
 	 *
 	 * @param time The time to create the KeyFrame at.
+	 * @param skeleton The Skeleton to create the KeyFrame from.
 	 */
-	public KeyFrame(int time) {
+	public KeyFrame(int time, Skeleton skeleton) {
 		this.time = time;
+		this.skeleton = skeleton;
 	}
 
 	/**
@@ -20,5 +23,14 @@ public class KeyFrame {
 	 */
 	public int getTime() {
 		return time;
+	}
+
+	/**
+	 * Gets the Skeleton of the KeyFrame.
+	 *
+	 * @return The Skeleton of the KeyFrame.
+	 */
+	public Skeleton getSkeleton() {
+		return skeleton;
 	}
 }

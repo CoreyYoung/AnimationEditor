@@ -16,14 +16,15 @@ public class SkeletonTest {
 	public void testRemoveBone() {
 		System.out.println("removeBone");
 
-		Skeleton.boneList.clear();
+		Skeleton skeleton = new Skeleton();
+
 		Bone bone = new Bone("Test Bone", 0);
-		Skeleton.boneList.add(bone);
+		skeleton.boneList.add(bone);
 
-		assert (!Skeleton.boneList.isEmpty());
+		assert (!skeleton.boneList.isEmpty());
 
-		Skeleton.removeBone(bone.name);
-		assert (Skeleton.boneList.isEmpty());
+		skeleton.removeBone(bone.name);
+		assert (skeleton.boneList.isEmpty());
 	}
 
 	/**
@@ -33,14 +34,15 @@ public class SkeletonTest {
 	public void testGetBone() {
 		System.out.println("getBone");
 
-		Skeleton.boneList.clear();
+		Skeleton skeleton = new Skeleton();
+
 		Bone bone1 = new Bone("Bone 1", 0);
 		Bone bone2 = new Bone("Bone 2", 0);
-		Skeleton.boneList.add(bone1);
-		Skeleton.boneList.add(bone2);
+		skeleton.boneList.add(bone1);
+		skeleton.boneList.add(bone2);
 
-		assertEquals(Skeleton.getBone("Bone 1"), bone1);
-		assertEquals(Skeleton.getBone("Bone 2"), bone2);
+		assertEquals(skeleton.getBone("Bone 1"), bone1);
+		assertEquals(skeleton.getBone("Bone 2"), bone2);
 	}
 
 	/**
@@ -50,18 +52,19 @@ public class SkeletonTest {
 	public void testGetBoneList() {
 		System.out.println("getBoneList");
 
+		Skeleton skeleton = new Skeleton();
 		Bone bone1 = new Bone("Bone 1", 0);
 		Bone bone2 = new Bone("Bone 2", 0);
 
-		Skeleton.boneList.clear();
-		Skeleton.boneList.add(bone1);
-		Skeleton.boneList.add(bone2);
+		skeleton.boneList.clear();
+		skeleton.boneList.add(bone1);
+		skeleton.boneList.add(bone2);
 
 		ArrayList<HashMap> boneList = new ArrayList<>();
 		boneList.add(bone1.getBoneMap());
 		boneList.add(bone2.getBoneMap());
 
-		assertEquals(Skeleton.getBoneList(), boneList);
+		assertEquals(skeleton.getBoneList(), boneList);
 	}
 
 	/**
@@ -71,17 +74,18 @@ public class SkeletonTest {
 	public void testSetBoneList() {
 		System.out.println("setBoneList");
 
-		Skeleton.boneList.clear();
+		Skeleton skeleton = new Skeleton();
+
 		Bone bone = new Bone("Test Bone", 0);
 		ArrayList<HashMap> fileMap = new ArrayList<>();
 		fileMap.add(bone.getBoneMap());
-		Skeleton.setBoneList(fileMap);
+		skeleton.setBoneList(fileMap);
 
-		assert (Skeleton.boneList.get(0).name.equals(bone.name));
-		assert (Skeleton.boneList.get(0).childList.equals(bone.childList));
-		assert (Skeleton.boneList.get(0).dir == (bone.dir));
-		assert (Skeleton.boneList.get(0).image.equals(bone.image));
-		assert (Skeleton.boneList.get(0).imagePath.equals(bone.imagePath));
+		assert (skeleton.boneList.get(0).name.equals(bone.name));
+		assert (skeleton.boneList.get(0).childList.equals(bone.childList));
+		assert (skeleton.boneList.get(0).dir == (bone.dir));
+		assert (skeleton.boneList.get(0).image.equals(bone.image));
+		assert (skeleton.boneList.get(0).imagePath.equals(bone.imagePath));
 	}
 
 	/**
@@ -91,12 +95,13 @@ public class SkeletonTest {
 	public void testRender() {
 		System.out.println("render");
 
-		Skeleton.boneList.add(new Bone("Test Bone", 0));
+		Skeleton skeleton = new Skeleton();
+		skeleton.boneList.add(new Bone("Test Bone", 0));
 
 		JFrame frame = new JFrame();
 		frame.setVisible(true);
 
 		Graphics graphics = frame.getGraphics();
-		Skeleton.render(graphics);
+		skeleton.render(graphics);
 	}
 }

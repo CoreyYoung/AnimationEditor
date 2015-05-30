@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public abstract class Skeleton {
+public class Skeleton {
 
 	public static int x = 64;
 	public static int y = 32;
-	public static ArrayList<Bone> boneList = new ArrayList<>();
+	public ArrayList<Bone> boneList = new ArrayList<>();
 
 	/**
 	 * Removes a bone from the skeleton.
 	 *
 	 * @param name The name of the bone to remove.
 	 */
-	public static void removeBone(String name) {
+	public void removeBone(String name) {
 		Iterator iterator = boneList.iterator();
 
 		while (iterator.hasNext()) {
@@ -35,10 +35,9 @@ public abstract class Skeleton {
 	 * Gets a bone from the skeleton.
 	 *
 	 * @param name The name of the bone to get.
-	 * @return Returns the bone with the given name if found, otherwise returns
-	 * null.
+	 * @return Returns the bone with the given name if found, otherwise returns null.
 	 */
-	public static Bone getBone(String name) {
+	public Bone getBone(String name) {
 		for (Bone bone : boneList) {
 			if (bone.name.equals(name)) {
 				return bone;
@@ -57,10 +56,9 @@ public abstract class Skeleton {
 	/**
 	 * Gets a List of all bones, with bones stored in nested HashMaps.
 	 *
-	 * @return Returns an ArrayList<HashMap>, where HashMap is type
-	 * HashMap<Object>.
+	 * @return Returns an ArrayList<HashMap>, where HashMap is type HashMap<Object>.
 	 */
-	public static ArrayList<HashMap> getBoneList() {
+	public ArrayList<HashMap> getBoneList() {
 		ArrayList<HashMap> mapList = new ArrayList<>();
 
 		for (Bone bone : boneList) {
@@ -75,7 +73,7 @@ public abstract class Skeleton {
 	 *
 	 * @param fileMap An ArrayList<HashMap> which contains all the bones data.
 	 */
-	public static void setBoneList(ArrayList<HashMap> fileMap) {
+	public void setBoneList(ArrayList<HashMap> fileMap) {
 		boneList.clear();
 
 		for (HashMap boneMap : fileMap) {
@@ -88,7 +86,7 @@ public abstract class Skeleton {
 	 *
 	 * @param g The Graphics object that draws the Skeleton.
 	 */
-	public static void render(Graphics g) {
+	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 
 		for (Bone bone : boneList) {

@@ -180,9 +180,10 @@ public class BoneTest {
 
 		Bone parent = new Bone("Parent", 0);
 		Bone child = new Bone("Child", 0);
+		Skeleton skeleton = new Skeleton();
 		parent.childList.add(child);
-		Skeleton.boneList.add(parent);
+		skeleton.boneList.add(parent);
 
-		assertEquals(parent, child.getParent());
+		assertEquals(parent, child.getParent(skeleton));
 	}
 }

@@ -21,6 +21,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	public static Listener listener;
 	public static int time = 0;
 	public static AnimationEditorGUI self;
+	public static Skeleton skeleton;
 
 	/**
 	 * Initialises the program.
@@ -30,6 +31,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		listener = new Listener();
 		timer = new Timer(1000 / 60, listener);
 		timer.start();
+		skeleton = new Skeleton();
 
 		initComponents();
 		updateBoneTree();
@@ -303,12 +305,12 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private void btnAddBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoneActionPerformed
 		String boneName = "Bone 0";
 
-		for (int i = 0; Skeleton.getBone(boneName) != null; i++) {
+		for (int i = 0; skeleton.getBone(boneName) != null; i++) {
 			boneName = "Bone " + i;
 		}
 
 		Bone bone = new Bone(boneName, Bone.DEFAULT_IMAGE_PATH, 0);
-		Skeleton.boneList.add(bone);
+		skeleton.boneList.add(bone);
 
 		updateBoneTree();
     }//GEN-LAST:event_btnAddBoneActionPerformed
@@ -317,7 +319,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		Bone bone = getSelectedBone();
 
 		if (bone != null) {
-			Skeleton.removeBone(bone.name);
+			skeleton.removeBone(bone.name);
 			updateBoneTree();
 		}
     }//GEN-LAST:event_btnRemoveBoneActionPerformed
@@ -326,9 +328,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		Bone child = getSelectedBone();
 
 		if (child != null) {
-			Bone oldParent = child.getParent();
+			Bone oldParent = child.getParent(skeleton);
 			String parentName = JOptionPane.showInputDialog("Enter Parent Name:", oldParent.name);
-			Bone parent = Skeleton.getBone(parentName);
+			Bone parent = skeleton.getBone(parentName);
 
 			if (parentName != null) {
 				if (parent == null) {
@@ -339,7 +341,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 				} else if (child.getDescendant(parentName) != null) {
 					JOptionPane.showMessageDialog(null, "Error: Parent cannot be descendant of child!");
 				} else {
-					Skeleton.removeBone(child.name);
+					skeleton.removeBone(child.name);
 
 					parent.childList.add(child);
 					updateBoneTree();
@@ -352,14 +354,14 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		Bone bone = getSelectedBone();
 
 		if (bone != null) {
-			Skeleton.removeBone(bone.name);
-			Skeleton.boneList.add(bone);
+			skeleton.removeBone(bone.name);
+			skeleton.boneList.add(bone);
 			updateBoneTree();
 		}
     }//GEN-LAST:event_btnResetParentActionPerformed
 
     private void btnSaveSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSkeletonActionPerformed
-		ArrayList<HashMap> boneList = Skeleton.getBoneList();
+		ArrayList<HashMap> boneList = skeleton.getBoneList();
 		Yaml yaml = new Yaml();
 		String contents = yaml.dump(boneList);
 
@@ -370,7 +372,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		try (FileReader fileReader = new FileReader("test.skeleton")) {
 			Yaml yaml = new Yaml();
 			ArrayList<HashMap> fileList = (ArrayList<HashMap>) yaml.load(fileReader);
-			Skeleton.setBoneList(fileList);
+			skeleton.setBoneList(fileList);
 			updateBoneTree();
 		} catch (IOException e) {
 			System.err.println(e);
@@ -383,7 +385,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		if (bone != null) {
 			String newName = JOptionPane.showInputDialog("Enter New Name:", bone.name);
 
-			if (Skeleton.getBone(newName) == null && newName != null) {
+			if (skeleton.getBone(newName) == null && newName != null) {
 				bone.name = newName;
 			}
 
@@ -425,7 +427,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 			int frame = Integer.parseInt(input);
 
 			if (Animation.getKeyFrame(frame) == null) {
-				Animation.addKeyFrame(frame);
+				Animation.addKeyFrame(frame, skeleton);
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: Frame already exists for given time!");
 			}
@@ -495,7 +497,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
 		root.removeAllChildren();
 
-		for (Bone bone : Skeleton.boneList) {
+		for (Bone bone : skeleton.boneList) {
 			DefaultMutableTreeNode node = bone.getTreeBranch();
 			root.add(node);
 		}
@@ -556,7 +558,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	private Bone getSelectedBone() {
 		if (boneTree.getLastSelectedPathComponent() != null) {
 			String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
-			Bone bone = Skeleton.getBone(selectedBoneName);
+			Bone bone = skeleton.getBone(selectedBoneName);
 
 			if (bone == null) {
 				JOptionPane.showMessageDialog(null, "Error: No bone selected!");

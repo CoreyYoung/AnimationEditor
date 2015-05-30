@@ -7,22 +7,22 @@ public class Animation {
 	public static HashMap<Integer, KeyFrame> keyFrameMap = new HashMap<>();
 
 	/**
-	 * Adds a keyframe to the animation with the given time.
+	 * Adds a KeyFrame to the animation with the given time.
 	 *
-	 * @param time The time to create the keyframe at.
+	 * @param time The time to create the KeyFrame at.
+	 * @param skeleton The Skeleton to create the KeyFrame from.
 	 */
-	public static void addKeyFrame(int time) {
-		KeyFrame keyFrame = new KeyFrame(time);
+	public static void addKeyFrame(int time, Skeleton skeleton) {
+		KeyFrame keyFrame = new KeyFrame(time, skeleton);
 
 		keyFrameMap.put(time, keyFrame);
 	}
 
 	/**
-	 * Gets the keyframe at the given time.
+	 * Gets the KeyFrame at the given time.
 	 *
-	 * @param time The time of the required keyframe.
-	 * @return The keyframe found at the given time. Returns null if no keyframe
-	 * is found.
+	 * @param time The time of the required KeyFrame.
+	 * @return The KeyFrame found at the given time. Returns null if no KeyFrame is found.
 	 */
 	public static KeyFrame getKeyFrame(int time) {
 		for (KeyFrame keyFrame : keyFrameMap.values()) {

@@ -15,7 +15,7 @@ public class AnimationTest {
 		Animation.keyFrameMap.clear();
 
 		int time = 0;
-		Animation.addKeyFrame(time);
+		Animation.addKeyFrame(time, new Skeleton());
 
 		assert (Animation.keyFrameMap.containsKey(time));
 	}
@@ -34,7 +34,7 @@ public class AnimationTest {
 		KeyFrame result = Animation.getKeyFrame(time);
 		assertEquals(expResult, result);
 
-		Animation.addKeyFrame(time);
+		Animation.addKeyFrame(time, new Skeleton());
 		result = Animation.getKeyFrame(time);
 		assertEquals(result.getTime(), time);
 	}
