@@ -424,10 +424,14 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private void btnAddFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFrameActionPerformed
 		String input = JOptionPane.showInputDialog("Enter Frame Position (MiliSeconds):");
 		try {
-			int frame = Integer.parseInt(input);
+			int frameTime = Integer.parseInt(input);
 
-			if (Animation.getKeyFrame(frame) == null) {
-				Animation.addKeyFrame(frame, skeleton);
+			if (Animation.getKeyFrame(frameTime) == null) {
+				Skeleton newSkeleton = new Skeleton();
+				newSkeleton.setBoneList(skeleton.getBoneList());
+				
+				KeyFrame frame = new KeyFrame(frameTime, newSkeleton);
+				Animation.addKeyFrame(frame);
 			} else {
 				JOptionPane.showMessageDialog(null, "Error: Frame already exists for given time!");
 			}
@@ -518,7 +522,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
 		root.removeAllChildren();
 
-		for (KeyFrame keyFrame : Animation.keyFrameMap.values()) {
+		for (KeyFrame keyFrame : Animation.keyFrameList) {
 			DefaultMutableTreeNode node = new DefaultMutableTreeNode(keyFrame.getTime());
 			root.add(node);
 		}

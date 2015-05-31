@@ -12,12 +12,12 @@ public class AnimationTest {
 	public void testAddKeyFrame() {
 		System.out.println("addKeyFrame");
 
-		Animation.keyFrameMap.clear();
+		KeyFrame frame = new KeyFrame(0, new Skeleton());
+		
+		Animation.keyFrameList.clear();
+		Animation.addKeyFrame(frame);
 
-		int time = 0;
-		Animation.addKeyFrame(time, new Skeleton());
-
-		assert (Animation.keyFrameMap.containsKey(time));
+		assert (Animation.keyFrameList.contains(frame));
 	}
 
 	/**
@@ -27,14 +27,14 @@ public class AnimationTest {
 	public void testGetKeyFrame() {
 		System.out.println("getKeyFrame");
 
-		Animation.keyFrameMap.clear();
+		Animation.keyFrameList.clear();
 
 		int time = 0;
 		KeyFrame expResult = null;
 		KeyFrame result = Animation.getKeyFrame(time);
 		assertEquals(expResult, result);
 
-		Animation.addKeyFrame(time, new Skeleton());
+		Animation.addKeyFrame(new KeyFrame(time, new Skeleton()));
 		result = Animation.getKeyFrame(time);
 		assertEquals(result.getTime(), time);
 	}

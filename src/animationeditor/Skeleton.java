@@ -80,6 +80,29 @@ public class Skeleton {
 			boneList.add(loadBoneFromMap(boneMap));
 		}
 	}
+	
+	/**
+	 * Returns a Skeleton interpolated between this and the given Skeleton by a set amount.
+	 * @param skeleton2 The second Skeleton used for interpolation.
+	 * @param amount The balance between this and the given Skeleton. Should be between 0 and 1.
+	 * @return The new interpolated Skeleton.
+	 */
+	public Skeleton getInterpolatedSkeleton(Skeleton skeleton2, double amount) {
+		Skeleton result = new Skeleton();
+		result.setBoneList(this.getBoneList());
+		
+		
+		for (Bone bone : result.boneList) {
+			int dir1 = getBone(bone.name).dir;
+			int dir2 = skeleton2.getBone(bone.name).dir;
+			
+			bone.dir = (int) (dir1 + ((dir2 - dir1) * amount));
+			
+			System.out.println(amount);
+		}
+		
+		return result;
+	}
 
 	/**
 	 * Renders the Skeleton.
@@ -88,8 +111,17 @@ public class Skeleton {
 	 */
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-
-		for (Bone bone : boneList) {
+		
+		AnimationEditorGUI.time ++;
+		
+		Skeleton skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.time);
+		
+		if (skeleton == null) {
+			skeleton = this;
+			System.out.println("It is null, time is: " + AnimationEditorGUI.time);
+		}
+		
+		for (Bone bone : skeleton.boneList) {
 			bone.drawBone(g2d, x, y, 0);
 		}
 	}

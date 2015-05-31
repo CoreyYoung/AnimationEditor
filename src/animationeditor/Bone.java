@@ -52,26 +52,6 @@ public class Bone {
 	 * @param dir The direction of rotation to draw the bone
 	 */
 	public void drawBone(Graphics2D g2d, int x, int y, int dir) {
-		/*if (! Skeleton.frameMap.isEmpty()) {
-            
-		 int currentFrame = AnimationEditorGUI.frame*1000/60;
-		 int nextFrame = Integer.MAX_VALUE;
-            
-		 int rotation = 180;
-            
-		 for (int key : Skeleton.frameMap.keySet()) {
-		 if (currentFrame < key && key < nextFrame) {
-		 nextFrame = key;
-		 }
-		 }
-            
-		 if (nextFrame != Integer.MAX_VALUE) {
-		 dir = (int) ((float) rotation / ((float) nextFrame / (float) currentFrame));
-		 }
-            
-            
-		 }*/
-
 		int width = image.getWidth(null);
 		int length = image.getHeight(null);
 		dir += this.dir;
@@ -209,6 +189,6 @@ public class Bone {
 			return bone;
 		}
 
-		return null; //This shouldn't ever happen.
+		throw new NullPointerException();
 	}
 }
