@@ -191,4 +191,19 @@ public class Bone {
 
 		throw new NullPointerException();
 	}
+
+	public Bone getInterpolatedBone(Bone bone2, double amount) {
+		Bone bone = new Bone(this.name, this.imagePath, this.dir);
+
+		int dir1 = this.dir;
+		int dir2 = bone2.dir;
+
+		bone.dir = (int) (dir1 + ((dir2 - dir1) * amount));
+
+		for (Bone child : this.childList) {
+			bone.childList.add(child.getInterpolatedBone(bone2.getDescendant(child.name), amount));
+		}
+
+		return bone;
+	}
 }

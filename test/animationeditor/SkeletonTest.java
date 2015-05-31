@@ -104,4 +104,28 @@ public class SkeletonTest {
 		Graphics graphics = frame.getGraphics();
 		skeleton.render(graphics);
 	}
+
+	/**
+	 * Test of getInterpolatedSkeleton method, of class Skeleton.
+	 */
+	@Test
+	public void testGetInterpolatedSkeleton() {
+		System.out.println("getInterpolatedSkeleton");
+
+		String name = "Bone";
+
+		Skeleton skeleton1 = new Skeleton();
+		skeleton1.boneList.add(new Bone(name, 0));
+
+		Skeleton skeleton2 = new Skeleton();
+		skeleton2.boneList.add(new Bone(name, 100));
+
+		Skeleton result1 = skeleton1.getInterpolatedSkeleton(skeleton2, 0.1);
+		Skeleton result2 = skeleton1.getInterpolatedSkeleton(skeleton2, 0.5);
+		Skeleton result3 = skeleton1.getInterpolatedSkeleton(skeleton2, 0.7);
+
+		assert (result1.getBone(name).dir == 10);
+		assert (result2.getBone(name).dir == 50);
+		assert (result3.getBone(name).dir == 70);
+	}
 }

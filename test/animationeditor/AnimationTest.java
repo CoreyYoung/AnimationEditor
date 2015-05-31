@@ -13,7 +13,7 @@ public class AnimationTest {
 		System.out.println("addKeyFrame");
 
 		KeyFrame frame = new KeyFrame(0, new Skeleton());
-		
+
 		Animation.keyFrameList.clear();
 		Animation.addKeyFrame(frame);
 

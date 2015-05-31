@@ -429,7 +429,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 			if (Animation.getKeyFrame(frameTime) == null) {
 				Skeleton newSkeleton = new Skeleton();
 				newSkeleton.setBoneList(skeleton.getBoneList());
-				
+
 				KeyFrame frame = new KeyFrame(frameTime, newSkeleton);
 				Animation.addKeyFrame(frame);
 			} else {

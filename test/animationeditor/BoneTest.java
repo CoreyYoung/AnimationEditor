@@ -1,15 +1,15 @@
 package animationeditor;
 
-import java.util.ArrayList;
-import java.awt.Image;
-import java.awt.Toolkit;
-import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.tree.DefaultMutableTreeNode;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class BoneTest {
 
@@ -185,5 +185,26 @@ public class BoneTest {
 		skeleton.boneList.add(parent);
 
 		assertEquals(parent, child.getParent(skeleton));
+	}
+
+	/**
+	 * Test of getInterpolatedBone method, of class Bone.
+	 */
+	@Test
+	public void testGetInterpolatedBone() {
+		System.out.println("getInterpolatedBone");
+
+		String name = "Bone";
+
+		Bone bone1 = new Bone(name, 0);
+		Bone bone2 = new Bone(name, 100);
+
+		Bone result1 = bone1.getInterpolatedBone(bone2, 0.1);
+		Bone result2 = bone1.getInterpolatedBone(bone2, 0.5);
+		Bone result3 = bone1.getInterpolatedBone(bone2, 0.7);
+
+		assert (result1.dir == 10);
+		assert (result2.dir == 50);
+		assert (result3.dir == 70);
 	}
 }
