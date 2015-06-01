@@ -174,9 +174,13 @@ public class Bone {
 	/**
 	 * Returns the parent bone.
 	 *
-	 * @return The parent bone.
+	 * @return The parent bone. Returns null if no parent is found.
 	 */
 	public Bone getParent(Skeleton skeleton) {
+		if (skeleton.boneList.contains(this)) {
+			return null;
+		}
+
 		for (Bone bone : skeleton.boneList) {
 			while (!bone.childList.contains(this)) {
 				for (Bone child : bone.childList) {
@@ -189,7 +193,7 @@ public class Bone {
 			return bone;
 		}
 
-		throw new NullPointerException();
+		throw null;
 	}
 
 	public Bone getInterpolatedBone(Bone bone2, double amount) {
