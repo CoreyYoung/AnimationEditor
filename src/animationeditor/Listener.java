@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Listener implements ActionListener {
 
 	/**
-	 * Redraws the skeleton.
+	 * Redraws the Skeleton.
 	 *
 	 * @param ae The ActionEvent.
 	 */

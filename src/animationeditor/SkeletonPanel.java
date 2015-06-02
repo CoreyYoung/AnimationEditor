@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 public class SkeletonPanel extends JPanel {
 
 	/**
-	 * renders the skeleton.
+	 * renders the Skeleton.
 	 *
-	 * @param g The graphics object responsible for drawing the skeleton.
+	 * @param g The Graphics object responsible for drawing the Skeleton.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {

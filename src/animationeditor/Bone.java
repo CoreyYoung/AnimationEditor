@@ -21,9 +21,9 @@ public class Bone {
 	/**
 	 * Creates a Bone object.
 	 *
-	 * @param name The name of the new bone.
-	 * @param imagePath	The URI of the new bone's image.
-	 * @param dir The direction of the new bone.
+	 * @param name The name of the new Bone.
+	 * @param imagePath	The URI of the new Bone's image.
+	 * @param dir The direction of the new Bone.
 	 */
 	public Bone(String name, String imagePath, int dir) {
 		setImage(imagePath);
@@ -34,8 +34,8 @@ public class Bone {
 	/**
 	 * Creates a new Bone object.
 	 *
-	 * @param name The name of the new bone.
-	 * @param dir The direction of the new bone.
+	 * @param name The name of the new Bone.
+	 * @param dir The direction of the new Bone.
 	 */
 	public Bone(String name, int dir) {
 		setImage(DEFAULT_IMAGE_PATH);
@@ -44,12 +44,12 @@ public class Bone {
 	}
 
 	/**
-	 * Draws the bone.
+	 * Draws the Bone.
 	 *
-	 * @param g2d A graphics2D object responsible for drawing the bone.
-	 * @param x	The x-coordinate to draw the bone at.
-	 * @param y The y-coordinate to draw the bone at.
-	 * @param dir The direction of rotation to draw the bone
+	 * @param g2d A graphics2D object responsible for drawing the Bone.
+	 * @param x The x-coordinate to draw the Bone at.
+	 * @param y The y-coordinate to draw the Bone at.
+	 * @param dir The direction of rotation to draw the Bone
 	 */
 	public void drawBone(Graphics2D g2d, int x, int y, int dir) {
 		int width = image.getWidth(null);
@@ -72,9 +72,9 @@ public class Bone {
 	}
 
 	/**
-	 * Sets the direction of the bone.
+	 * Sets the direction of the Bone.
 	 *
-	 * @param dir The new direction of the bone.
+	 * @param dir The new direction of the Bone.
 	 */
 	public void setDirection(int dir) {
 		this.dir = dir;
@@ -82,9 +82,9 @@ public class Bone {
 	}
 
 	/**
-	 * Sets the image of the bone.
+	 * Sets the image of the Bone.
 	 *
-	 * @param imagePath The URI of the new image of the bone.
+	 * @param imagePath The URI of the new image of the Bone.
 	 */
 	public void setImage(String imagePath) {
 		this.imagePath = imagePath;
@@ -92,10 +92,10 @@ public class Bone {
 	}
 
 	/**
-	 * Searches child bones recursively for a bone with a given name.
+	 * Searches child Bones recursively for a Bone with a given name.
 	 *
-	 * @param name The name of the bone to find.
-	 * @return The bone with the given name. Returns null if no bone is found.
+	 * @param name The name of the Bone to find.
+	 * @return The Bone with the given name. Returns null if no Bone is found.
 	 */
 	public Bone getDescendant(String name) {
 		for (Bone child : childList) {
@@ -114,9 +114,9 @@ public class Bone {
 	}
 
 	/**
-	 * Deletes a descendant bone with the given name.
+	 * Deletes a descendant Bone with the given name.
 	 *
-	 * @param name The name of the bone to delete.
+	 * @param name The name of the Bone to delete.
 	 */
 	public void removeDescendant(String name) {
 		Iterator childIterator = childList.iterator();
@@ -133,7 +133,7 @@ public class Bone {
 	}
 
 	/**
-	 * Creates a DefaultMutableTreeNode with the same structure as the bone map.
+	 * Creates a DefaultMutableTreeNode with the same structure as the Bone map.
 	 *
 	 * @return The new DefaultMutableTreeNode.
 	 */
@@ -149,9 +149,9 @@ public class Bone {
 	}
 
 	/**
-	 * Gets a map of the bone structure.
+	 * Gets a map of the Bone's structure.
 	 *
-	 * @return A hashmap of the bone's structure.
+	 * @return A HashMap of the Bone's structure.
 	 */
 	public HashMap<String, Object> getBoneMap() {
 		HashMap<String, Object> boneMap = new HashMap<>();
@@ -172,9 +172,9 @@ public class Bone {
 	}
 
 	/**
-	 * Returns the parent bone.
+	 * Returns the parent Bone.
 	 *
-	 * @return The parent bone. Returns null if no parent is found.
+	 * @return The parent Bone. Returns null if no parent is found.
 	 */
 	public Bone getParent(Skeleton skeleton) {
 		if (skeleton.boneList.contains(this)) {
@@ -193,9 +193,16 @@ public class Bone {
 			return bone;
 		}
 
-		throw null;
+		return null;
 	}
 
+	/**
+	 * Returns a Bone interpolated between this and the given Bone by a set amount.
+	 *
+	 * @param bone2 The second Bone used for interpolation.
+	 * @param amount The balance between this and the given Bone. Should be between 0 and 1.
+	 * @return The new interpolated Bone.
+	 */
 	public Bone getInterpolatedBone(Bone bone2, double amount) {
 		Bone bone = new Bone(this.name, this.imagePath, this.dir);
 

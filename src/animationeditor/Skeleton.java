@@ -13,9 +13,9 @@ public class Skeleton {
 	public ArrayList<Bone> boneList = new ArrayList<>();
 
 	/**
-	 * Removes a bone from the skeleton.
+	 * Removes a Bone from the Skeleton.
 	 *
-	 * @param name The name of the bone to remove.
+	 * @param name The name of the Bone to remove.
 	 */
 	public void removeBone(String name) {
 		Iterator iterator = boneList.iterator();
@@ -32,10 +32,10 @@ public class Skeleton {
 	}
 
 	/**
-	 * Gets a bone from the skeleton.
+	 * Gets a Bone from the Skeleton.
 	 *
-	 * @param name The name of the bone to get.
-	 * @return Returns the bone with the given name if found, otherwise returns null.
+	 * @param name The name of the Bone to get.
+	 * @return Returns the Bone with the given name if found, otherwise returns null.
 	 */
 	public Bone getBone(String name) {
 		for (Bone bone : boneList) {
@@ -54,7 +54,7 @@ public class Skeleton {
 	}
 
 	/**
-	 * Gets a List of all bones, with bones stored in nested HashMaps.
+	 * Gets a List of all Bones, with Bones stored in nested HashMaps.
 	 *
 	 * @return Returns an ArrayList<HashMap>, where HashMap is type HashMap<Object>.
 	 */
@@ -69,9 +69,9 @@ public class Skeleton {
 	}
 
 	/**
-	 * Replaces all bones in skeleton with bones data passed in a List<HashMap>.
+	 * Replaces all Bones in Skeleton with Bones data passed in a List<HashMap>.
 	 *
-	 * @param fileMap An ArrayList<HashMap> which contains all the bones data.
+	 * @param fileMap An ArrayList<HashMap> which contains all the Bones data.
 	 */
 	public void setBoneList(ArrayList<HashMap> fileMap) {
 		boneList.clear();
@@ -121,10 +121,10 @@ public class Skeleton {
 	}
 
 	/**
-	 * Loads a bone from data stored in a HashMap.
+	 * Loads a Bone from data stored in a HashMap.
 	 *
-	 * @param boneMap A HashMap<String, Object> that contains the bone's data.
-	 * @return The bone that was loaded.
+	 * @param boneMap A HashMap<String, Object> that contains the Bone's data.
+	 * @return The Bone that was loaded.
 	 */
 	private static Bone loadBoneFromMap(HashMap<String, Object> boneMap) {
 		String name = (String) boneMap.get("Name");

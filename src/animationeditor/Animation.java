@@ -38,7 +38,6 @@ public class Animation {
 	 * @return The Skeleton for the given time.
 	 */
 	public static Skeleton getInterpolatedSkeleton(int time) {
-		// Fix this, as it currently only interpolates top-level bones.
 		Skeleton skeleton = null;
 		KeyFrame frame1 = null;
 		KeyFrame frame2 = null;
