@@ -57,7 +57,7 @@ public class Animation {
 		}
 
 		if (frame1 != null && frame2 != null) {
-			// Initialise position and duration variables for clarity, but also 
+			// Initialise position and duration variables for clarity, but also
 			// so division is performed with doubles.
 			double duration = frame2.getTime() - frame1.getTime();
 			double position = time - frame1.getTime();

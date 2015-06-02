@@ -1,40 +1,76 @@
-- Name: Head
-  Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
-  Child Map:
-  - Name: Body
-    Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
+Animation:
+  0:
+  - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
     Child Map:
-    - Name: RightUpperLeg
-      Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperLeg.png
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
       Child Map:
-      - Name: RightLowerLeg
-        Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerLeg.png
+      - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperLeg.png
+        Child Map:
+        - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerLeg.png
+          Child Map: []
+          Direction: -10
+          Name: LeftLowerLeg
+        Direction: 25
+        Name: LeftUpperLeg
+      Direction: 0
+      Name: Body
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperArm.png
+      Child Map:
+      - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerArm.png
+        Child Map: []
+        Direction: 25
+        Name: LeftLowerArm
+      Direction: -45
+      Name: LeftUpperArm
+    Direction: 0
+    Name: Head
+  200:
+  - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
+    Child Map:
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
+      Child Map:
+      - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperLeg.png
+        Child Map:
+        - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerLeg.png
+          Child Map: []
+          Direction: -10
+          Name: LeftLowerLeg
+        Direction: 25
+        Name: LeftUpperLeg
+      Direction: 0
+      Name: Body
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperArm.png
+      Child Map:
+      - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerArm.png
+        Child Map: []
+        Direction: 25
+        Name: LeftLowerArm
+      Direction: -45
+      Name: LeftUpperArm
+    Direction: 0
+    Name: Head
+Skeleton:
+- Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
+  Child Map:
+  - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
+    Child Map:
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperLeg.png
+      Child Map:
+      - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerLeg.png
         Child Map: []
         Direction: -10
-      Direction: 40
-    - Name: LeftUpperLeg
-      Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperLeg.png
-      Child Map:
-      - Name: LeftLowerLeg
-        Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerLeg.png
-        Child Map: []
-        Direction: -20
-      Direction: -20
+        Name: LeftLowerLeg
+      Direction: 25
+      Name: LeftUpperLeg
     Direction: 0
-  - Name: LeftUpperArm
-    Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperArm.png
+    Name: Body
+  - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperArm.png
     Child Map:
-    - Name: LeftLowerArm
-      Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerArm.png
+    - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerArm.png
       Child Map: []
-      Direction: 60
-    Direction: -80
-  - Name: RightUpperArm
-    Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/UpperArm.png
-    Child Map:
-    - Name: RightLowerArm
-      Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/LowerArm.png
-      Child Map: []
-      Direction: -40
-    Direction: 80
+      Direction: 25
+      Name: LeftLowerArm
+    Direction: -45
+    Name: LeftUpperArm
   Direction: 0
+  Name: Head

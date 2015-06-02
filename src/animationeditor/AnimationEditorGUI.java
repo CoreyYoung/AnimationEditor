@@ -69,7 +69,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         btnSaveSkeleton = new javax.swing.JMenuItem();
         btnLoadSkeleton = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,7 +148,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAddBone)
                             .addComponent(btnSetParent))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnResetParent, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRemoveBone, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -235,7 +234,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddFrame)
@@ -266,15 +265,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         });
         jMenu1.add(btnLoadSkeleton);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Save Animation");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -288,7 +278,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+                .addComponent(jSplitPane2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -393,18 +383,41 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetParentActionPerformed
 
     private void btnSaveSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSkeletonActionPerformed
+		HashMap<String, Object> fileMap = new HashMap<>();
 		ArrayList<HashMap> boneList = skeleton.getBoneList();
-		Yaml yaml = new Yaml();
-		String contents = yaml.dump(boneList);
 
+		fileMap.put("Skeleton", boneList);
+
+		HashMap<Integer, ArrayList> animationMap = new HashMap<>();
+
+		for (KeyFrame frame : Animation.keyFrameList) {
+			animationMap.put(frame.getTime(), frame.getSkeleton().getBoneList());
+		}
+
+		fileMap.put("Animation", animationMap);
+
+		Yaml yaml = new Yaml();
+		String contents = yaml.dump(fileMap);
 		saveYaml("test.skeleton", contents);
     }//GEN-LAST:event_btnSaveSkeletonActionPerformed
 
     private void btnLoadSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadSkeletonActionPerformed
 		try (FileReader fileReader = new FileReader("test.skeleton")) {
 			Yaml yaml = new Yaml();
-			ArrayList<HashMap> fileList = (ArrayList<HashMap>) yaml.load(fileReader);
-			skeleton.setBoneList(fileList);
+			HashMap<String, Object> fileMap = (HashMap<String, Object>) yaml.load(fileReader);
+			ArrayList<HashMap> boneList = (ArrayList<HashMap>) fileMap.get("Skeleton");
+			skeleton.setBoneList(boneList);
+
+			HashMap<Integer, ArrayList> frameMap = (HashMap<Integer, ArrayList>) fileMap.get("Animation");
+			Animation.keyFrameList.clear();
+
+			for (int time : frameMap.keySet()) {
+				Skeleton skeleton = new Skeleton();
+				skeleton.setBoneList(frameMap.get(time));
+				KeyFrame frame = new KeyFrame(time, skeleton);
+				Animation.addKeyFrame(frame);
+			}
+
 			updateBoneTree();
 		} catch (IOException e) {
 			System.err.println(e);
@@ -487,14 +500,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		time = 0;
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO Fix this method
-
-		//Yaml yaml = new Yaml();
-		//String contents = yaml.dump(Skeleton.frameMap);
-		//saveYaml("test.animation", contents);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
@@ -635,7 +640,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
