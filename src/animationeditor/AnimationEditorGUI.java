@@ -55,16 +55,17 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         btnResetParent = new javax.swing.JButton();
         btnRenameBone = new javax.swing.JButton();
         btnRotateBone = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnSetImage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         boneTree = new javax.swing.JTree();
         jSplitPane3 = new javax.swing.JSplitPane();
         DisplayFrame = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
         btnAddFrame = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnReplayAnimation = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         frameTree = new javax.swing.JTree();
+        btnRemoveFrame = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSaveSkeleton = new javax.swing.JMenuItem();
@@ -125,10 +126,10 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Set Image");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSetImage.setText("Set Image");
+        btnSetImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSetImageActionPerformed(evt);
             }
         });
 
@@ -139,7 +140,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(btnSetImage)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnRenameBone)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -170,7 +171,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                     .addComponent(btnRenameBone)
                     .addComponent(btnRotateBone))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnSetImage)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -198,7 +199,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         );
         DisplayFrameLayout.setVerticalGroup(
             DisplayFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
 
         jSplitPane3.setTopComponent(DisplayFrame);
@@ -210,14 +211,21 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Replay Animation");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnReplayAnimation.setText("Replay Animation");
+        btnReplayAnimation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnReplayAnimationActionPerformed(evt);
             }
         });
 
         jScrollPane2.setViewportView(frameTree);
+
+        btnRemoveFrame.setText("Remove Frame");
+        btnRemoveFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFrameActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,8 +235,10 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnAddFrame)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addComponent(btnRemoveFrame)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReplayAnimation)
+                .addContainerGap())
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,7 +248,8 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddFrame)
-                    .addComponent(jButton3)))
+                    .addComponent(btnReplayAnimation)
+                    .addComponent(btnRemoveFrame)))
         );
 
         jSplitPane3.setRightComponent(jPanel1);
@@ -285,7 +296,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -456,7 +467,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_btnRotateBoneActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSetImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetImageActionPerformed
 		Bone bone = getSelectedBone();
 
 		if (bone != null) {
@@ -473,7 +484,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
 			bone.setImage(path);
 		}
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSetImageActionPerformed
 
     private void btnAddFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFrameActionPerformed
 		String input = JOptionPane.showInputDialog("Enter Frame Position (MiliSeconds):");
@@ -497,9 +508,16 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		updateFrameTree();
     }//GEN-LAST:event_btnAddFrameActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnReplayAnimationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplayAnimationActionPerformed
 		time = 0;
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnReplayAnimationActionPerformed
+
+    private void btnRemoveFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFrameActionPerformed
+		KeyFrame frame = getSelectedKeyFrame();
+
+		Animation.keyFrameList.remove(frame);
+		updateFrameTree();
+    }//GEN-LAST:event_btnRemoveFrameActionPerformed
 
 	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
@@ -529,7 +547,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Redraws the skeleton.
+	 * Redraws the Skeleton.
 	 */
 	public static void redrawSkeleton() {
 		JInternalFrame frame = DisplayFrame;
@@ -538,7 +556,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Updates the GUI bone list so that the structure matches the skeleton
+	 * Updates the GUI Bone list so that the structure matches the Skeleton
 	 * object.
 	 */
 	private void updateBoneTree() {
@@ -560,7 +578,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Updates the GUI KeyFrame list so that it matches the animation object.
+	 * Updates the GUI KeyFrame list so that it matches the Animation object.
 	 */
 	private void updateFrameTree() {
 		DefaultTreeModel model = (DefaultTreeModel) frameTree.getModel();
@@ -581,7 +599,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Saves a string to a Yaml file.
+	 * Saves a String to a Yaml file.
 	 *
 	 * @param fileName The name of the saved file.
 	 * @param fileContents The contents to save to the file.
@@ -601,9 +619,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Gets the bone currently selected in the GUI bone list.
+	 * Gets the Bone currently selected in the GUI bone list.
 	 *
-	 * @return The selected bone.
+	 * @return The selected Bone.
 	 */
 	private Bone getSelectedBone() {
 		if (boneTree.getLastSelectedPathComponent() != null) {
@@ -618,7 +636,28 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		}
 
 		JOptionPane.showMessageDialog(null, "Error: No bone selected!");
+		return null;
+	}
 
+	/**
+	 * Gets the KeyFrame currently selected in the GUI frame list.
+	 *
+	 * @return The selected KeyFrame.
+	 */
+	private KeyFrame getSelectedKeyFrame() {
+		if (frameTree.getLastSelectedPathComponent() != null) {
+			String name = frameTree.getLastSelectedPathComponent().toString();
+			int time = Integer.parseInt(name);
+			KeyFrame frame = Animation.getKeyFrame(time);
+
+			if (frame == null) {
+				JOptionPane.showMessageDialog(null, "Error: No frame selected!");
+			}
+
+			return frame;
+		}
+
+		JOptionPane.showMessageDialog(null, "Error: No frame selected!");
 		return null;
 	}
 
@@ -629,14 +668,15 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAddFrame;
     private javax.swing.JMenuItem btnLoadSkeleton;
     private javax.swing.JButton btnRemoveBone;
+    private javax.swing.JButton btnRemoveFrame;
     private javax.swing.JButton btnRenameBone;
+    private javax.swing.JButton btnReplayAnimation;
     private javax.swing.JButton btnResetParent;
     private javax.swing.JButton btnRotateBone;
     private javax.swing.JMenuItem btnSaveSkeleton;
+    private javax.swing.JButton btnSetImage;
     private javax.swing.JButton btnSetParent;
     private javax.swing.JTree frameTree;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
