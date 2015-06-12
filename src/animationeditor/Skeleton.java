@@ -5,12 +5,13 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Skeleton {
 
 	public static int x = 64;
 	public static int y = 32;
-	public ArrayList<Bone> boneList = new ArrayList<>();
+	public LinkedList<Bone> boneList = new LinkedList<>();
 
 	/**
 	 * Removes a Bone from the Skeleton.
@@ -18,10 +19,10 @@ public class Skeleton {
 	 * @param name The name of the Bone to remove.
 	 */
 	public void removeBone(String name) {
-		Iterator iterator = boneList.iterator();
+		Iterator<Bone> iterator = boneList.iterator();
 
 		while (iterator.hasNext()) {
-			Bone bone = (Bone) iterator.next();
+			Bone bone = iterator.next();
 
 			if (bone.name.equals(name)) {
 				iterator.remove();
@@ -58,8 +59,8 @@ public class Skeleton {
 	 *
 	 * @return Returns an ArrayList<HashMap>, where HashMap is type HashMap<Object>.
 	 */
-	public ArrayList<HashMap> getBoneList() {
-		ArrayList<HashMap> mapList = new ArrayList<>();
+	public ArrayList<HashMap<String, Object>> getBoneList() {
+		ArrayList<HashMap<String, Object>> mapList = new ArrayList<>();
 
 		for (Bone bone : boneList) {
 			mapList.add(bone.getBoneMap());
@@ -73,10 +74,10 @@ public class Skeleton {
 	 *
 	 * @param fileMap An ArrayList<HashMap> which contains all the Bones data.
 	 */
-	public void setBoneList(ArrayList<HashMap> fileMap) {
+	public void setBoneList(ArrayList<HashMap<String, Object>> fileMap) {
 		boneList.clear();
 
-		for (HashMap boneMap : fileMap) {
+		for (HashMap<String, Object> boneMap : fileMap) {
 			boneList.add(loadBoneFromMap(boneMap));
 		}
 	}
@@ -133,8 +134,9 @@ public class Skeleton {
 
 		Bone bone = new Bone(name, imagePath, dir);
 
-		ArrayList<HashMap> childMapList = (ArrayList<HashMap>) boneMap.get("Child Map");
-		ArrayList<Bone> childList = new ArrayList<>();
+		ArrayList<HashMap<String, Object>> childMapList;
+		childMapList = (ArrayList<HashMap<String, Object>>) boneMap.get("Child Map");
+		LinkedList<Bone> childList = new LinkedList<>();
 
 		for (HashMap<String, Object> childMap : childMapList) {
 			if (!childMap.isEmpty()) {

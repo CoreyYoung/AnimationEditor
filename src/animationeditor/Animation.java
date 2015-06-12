@@ -1,13 +1,13 @@
 package animationeditor;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Animation {
 
-	public static ArrayList<KeyFrame> keyFrameList = new ArrayList<>();
+	public static LinkedList<KeyFrame> keyFrameList = new LinkedList<>();
 
 	/**
-	 * Adds a KeyFrame to the animation with the given time.
+	 * Adds a KeyFrame to the animation.
 	 *
 	 * @param frame The KeyFrame to add to the animation.
 	 */

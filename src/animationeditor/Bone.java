@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Bone {
@@ -16,7 +17,7 @@ public class Bone {
 	public Image image;
 	public String name;
 	public int dir;
-	public ArrayList<Bone> childList = new ArrayList<>();
+	public LinkedList<Bone> childList = new LinkedList<>();
 
 	/**
 	 * Creates a Bone object.
@@ -63,10 +64,10 @@ public class Bone {
 		g2d.drawImage(image, 0, 0, width, length, null);
 		g2d.setTransform(oldTransform);
 
-		for (Bone child : childList) {
-			int endX = x + (int) (length * Math.sin(Math.toRadians(dir)));
-			int endY = y + (int) (length * Math.cos(Math.toRadians(dir)));
+		int endX = x + (int) (length * Math.sin(Math.toRadians(dir)));
+		int endY = y + (int) (length * Math.cos(Math.toRadians(dir)));
 
+		for (Bone child : childList) {
 			child.drawBone(g2d, endX, endY, dir);
 		}
 	}
@@ -119,10 +120,10 @@ public class Bone {
 	 * @param name The name of the Bone to delete.
 	 */
 	public void removeDescendant(String name) {
-		Iterator childIterator = childList.iterator();
+		Iterator<Bone> childIterator = childList.iterator();
 
 		while (childIterator.hasNext()) {
-			Bone child = (Bone) childIterator.next();
+			Bone child = childIterator.next();
 
 			if (child.name.equals(name)) {
 				childIterator.remove();
@@ -174,6 +175,7 @@ public class Bone {
 	/**
 	 * Returns the parent Bone.
 	 *
+	 * @param skeleton The skeleton that contains the bone.
 	 * @return The parent Bone. Returns null if no parent is found.
 	 */
 	public Bone getParent(Skeleton skeleton) {

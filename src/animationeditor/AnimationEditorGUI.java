@@ -24,7 +24,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 	public static Skeleton skeleton;
 
 	/**
-	 * Initialises the program.
+	 * initializes the program.
 	 */
 	public AnimationEditorGUI() {
 		skeletonPanel = new SkeletonPanel();
@@ -317,7 +317,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		}
 
 		skeleton.boneList.add(bone);
-
 		updateBoneTree();
     }//GEN-LAST:event_btnAddBoneActionPerformed
 
@@ -330,7 +329,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 			}
 
 			skeleton.removeBone(bone.name);
-
 			updateBoneTree();
 		}
     }//GEN-LAST:event_btnRemoveBoneActionPerformed
@@ -368,7 +366,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
 					skeleton.removeBone(child.name);
 					parent.childList.add(child);
-
 					updateBoneTree();
 				}
 			}
@@ -388,18 +385,17 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
 			skeleton.removeBone(bone.name);
 			skeleton.boneList.add(bone);
-
 			updateBoneTree();
 		}
     }//GEN-LAST:event_btnResetParentActionPerformed
 
     private void btnSaveSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSkeletonActionPerformed
 		HashMap<String, Object> fileMap = new HashMap<>();
-		ArrayList<HashMap> boneList = skeleton.getBoneList();
+		ArrayList<HashMap<String, Object>> boneList = skeleton.getBoneList();
 
 		fileMap.put("Skeleton", boneList);
 
-		HashMap<Integer, ArrayList> animationMap = new HashMap<>();
+		HashMap<Integer, ArrayList<HashMap<String, Object>>> animationMap = new HashMap<>();
 
 		for (KeyFrame frame : Animation.keyFrameList) {
 			animationMap.put(frame.getTime(), frame.getSkeleton().getBoneList());
@@ -416,20 +412,21 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 		try (FileReader fileReader = new FileReader("test.skeleton")) {
 			Yaml yaml = new Yaml();
 			HashMap<String, Object> fileMap = (HashMap<String, Object>) yaml.load(fileReader);
-			ArrayList<HashMap> boneList = (ArrayList<HashMap>) fileMap.get("Skeleton");
+			ArrayList<HashMap<String, Object>> boneList = (ArrayList<HashMap<String, Object>>) fileMap.get("Skeleton");
 			skeleton.setBoneList(boneList);
 
 			HashMap<Integer, ArrayList> frameMap = (HashMap<Integer, ArrayList>) fileMap.get("Animation");
 			Animation.keyFrameList.clear();
 
-			for (int time : frameMap.keySet()) {
-				Skeleton skeleton = new Skeleton();
-				skeleton.setBoneList(frameMap.get(time));
-				KeyFrame frame = new KeyFrame(time, skeleton);
+			for (int frameTime : frameMap.keySet()) {
+				Skeleton frameSkeleton = new Skeleton();
+				frameSkeleton.setBoneList(frameMap.get(frameTime));
+				KeyFrame frame = new KeyFrame(frameTime, frameSkeleton);
 				Animation.addKeyFrame(frame);
 			}
 
 			updateBoneTree();
+			updateFrameTree();
 		} catch (IOException e) {
 			System.err.println(e);
 		}

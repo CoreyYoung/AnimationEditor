@@ -1,11 +1,11 @@
 package animationeditor;
 
-import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JFrame;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class SkeletonTest {
 
@@ -77,7 +77,7 @@ public class SkeletonTest {
 		Skeleton skeleton = new Skeleton();
 
 		Bone bone = new Bone("Test Bone", 0);
-		ArrayList<HashMap> fileMap = new ArrayList<>();
+		ArrayList<HashMap<String, Object>> fileMap = new ArrayList<>();
 		fileMap.add(bone.getBoneMap());
 		skeleton.setBoneList(fileMap);
 
