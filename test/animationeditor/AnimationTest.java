@@ -5,37 +5,37 @@ import static org.junit.Assert.*;
 
 public class AnimationTest {
 
-	/**
-	 * Test of addKeyFrame method, of class Animation.
-	 */
-	@Test
-	public void testAddKeyFrame() {
-		System.out.println("addKeyFrame");
+    /**
+     * Test of addKeyFrame method, of class Animation.
+     */
+    @Test
+    public void testAddKeyFrame() {
+        System.out.println("addKeyFrame");
 
-		KeyFrame frame = new KeyFrame(0, new Skeleton());
+        KeyFrame frame = new KeyFrame(0, new Skeleton());
 
-		Animation.keyFrameList.clear();
-		Animation.addKeyFrame(frame);
+        Animation.keyFrameList.clear();
+        Animation.addKeyFrame(frame);
 
-		assert (Animation.keyFrameList.contains(frame));
-	}
+        assert (Animation.keyFrameList.contains(frame));
+    }
 
-	/**
-	 * Test of getKeyFrame method, of class Animation.
-	 */
-	@Test
-	public void testGetKeyFrame() {
-		System.out.println("getKeyFrame");
+    /**
+     * Test of getKeyFrame method, of class Animation.
+     */
+    @Test
+    public void testGetKeyFrame() {
+        System.out.println("getKeyFrame");
 
-		Animation.keyFrameList.clear();
+        Animation.keyFrameList.clear();
 
-		int time = 0;
-		KeyFrame expResult = null;
-		KeyFrame result = Animation.getKeyFrame(time);
-		assertEquals(expResult, result);
+        int time = 0;
+        KeyFrame expResult = null;
+        KeyFrame result = Animation.getKeyFrame(time);
+        assertEquals(expResult, result);
 
-		Animation.addKeyFrame(new KeyFrame(time, new Skeleton()));
-		result = Animation.getKeyFrame(time);
-		assertEquals(result.getTime(), time);
-	}
+        Animation.addKeyFrame(new KeyFrame(time, new Skeleton()));
+        result = Animation.getKeyFrame(time);
+        assertEquals(result.getTime(), time);
+    }
 }
