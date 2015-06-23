@@ -16,10 +16,11 @@ import org.yaml.snakeyaml.Yaml;
 
 public class AnimationEditorGUI extends javax.swing.JFrame {
 
-    public static SkeletonPanel skeletonPanel;
-    public static Timer timer;
-    public static Listener listener;
-    public static int time = 0;
+    private static SkeletonPanel skeletonPanel;
+    private static Timer timer;
+    private static Listener listener;
+    private static long startTime;
+    
     public static boolean isPlayingAnimation = false;
     public static AnimationEditorGUI self;
     public static Skeleton skeleton;
@@ -520,7 +521,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
     private void btnPlayAnimationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayAnimationActionPerformed
         isPlayingAnimation = true;
-        time = 0;
+        startTime = System.currentTimeMillis();
     }//GEN-LAST:event_btnPlayAnimationActionPerformed
 
     private void btnRemoveFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFrameActionPerformed
@@ -532,7 +533,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
     private void btnStopAnimationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopAnimationActionPerformed
         isPlayingAnimation = false;
-        time = 0;
+        startTime = System.currentTimeMillis();
     }//GEN-LAST:event_btnStopAnimationActionPerformed
 
     public static void main(String args[]) {
@@ -560,6 +561,23 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 new AnimationEditorGUI().setVisible(true);
             }
         });
+    }
+    
+    /**
+     * Gets the time in milliseconds since the animation started playing.
+     * 
+     * @return The time in milliseconds since the animation started playing.
+     */
+    public static long getTime() {
+        return System.currentTimeMillis() - startTime;
+    }
+    
+    
+    /**
+     * Resets the startTime to the current time.
+     */
+    public static void resetTime() {
+        startTime = System.currentTimeMillis();
     }
 
     /**

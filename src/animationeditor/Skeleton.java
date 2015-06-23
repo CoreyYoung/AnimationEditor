@@ -9,8 +9,9 @@ import java.util.LinkedList;
 
 public class Skeleton {
 
-    public static int x = 64;
-    public static int y = 32;
+    private static final int x = 64;
+    private static final int y = 32;
+    
     public LinkedList<Bone> boneList = new LinkedList<>();
 
     /**
@@ -113,14 +114,13 @@ public class Skeleton {
         Graphics2D g2d = (Graphics2D) g;
 
         if (AnimationEditorGUI.isPlayingAnimation) {
-            AnimationEditorGUI.time++;
-
-            if (AnimationEditorGUI.time > Animation.getLastKeyFrame().getTime()) {
-                AnimationEditorGUI.time = 0;
+            if (Animation.getLastKeyFrame() != null
+                    && AnimationEditorGUI.getTime() > Animation.getLastKeyFrame().getTime()) {
+                AnimationEditorGUI.resetTime();
             }
         }
 
-        Skeleton skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.time);
+        Skeleton skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
 
         if (skeleton == null) {
             skeleton = this;

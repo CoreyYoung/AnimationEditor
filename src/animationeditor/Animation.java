@@ -54,7 +54,7 @@ public class Animation {
      * @param time The time to get the Skeleton for.
      * @return The Skeleton for the given time.
      */
-    public static Skeleton getInterpolatedSkeleton(int time) {
+    public static Skeleton getInterpolatedSkeleton(long time) {
         Skeleton skeleton = null;
         KeyFrame frame1 = null;
         KeyFrame frame2 = null;

@@ -12,9 +12,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Bone {
 
+    private String imagePath;
+    private Image image;
+    
     public static final String DEFAULT_IMAGE_PATH = "data/Bone.png";
-    public String imagePath;
-    public Image image;
     public String name;
     public int dir;
     public LinkedList<Bone> childList = new LinkedList<>();

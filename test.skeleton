@@ -40,7 +40,7 @@ Animation:
       Name: RightUpperArm
     Direction: 0
     Name: Head
-  50:
+  500:
   - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
     Child Map:
     - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
@@ -81,7 +81,7 @@ Animation:
       Name: RightUpperArm
     Direction: 0
     Name: Head
-  100:
+  1000:
   - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Head.png
     Child Map:
     - Image Path: /home/corey/NetBeansProjects/AnimationEditor/data/Body.png
