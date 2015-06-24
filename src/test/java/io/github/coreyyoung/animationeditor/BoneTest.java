@@ -1,4 +1,4 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -93,9 +93,6 @@ public class BoneTest {
         DefaultMutableTreeNode grandChildNode = new DefaultMutableTreeNode(grandChild.name);
         childNode.add(grandChildNode);
 
-        //assert(parentNode.equals(parent.getTreeBranch()));
-        //assert(childNode.equals(child.getTreeBranch()));
-        //assert(grandChildNode.equals(grandChild.getTreeBranch()));
         String string1 = parentNode.toString();
         String string2 = parent.getTreeBranch().toString();
         assert (string1.equals(string2));
@@ -125,17 +122,17 @@ public class BoneTest {
         HashMap<String, Object> parentMap = new HashMap<>();
         parentMap.put("Name", "Parent");
         parentMap.put("Direction", 0);
-        parentMap.put("Image Path", "data/Bone.png");
+        parentMap.put("Image Path", "src/main/resources/data/Bone.png");
 
         HashMap<String, Object> childMap = new HashMap<>();
         childMap.put("Name", "Child");
         childMap.put("Direction", 90);
-        childMap.put("Image Path", "data/Bone.png");
+        childMap.put("Image Path", "src/main/resources/data/Bone.png");
 
         HashMap<String, Object> grandChildMap = new HashMap<>();
         grandChildMap.put("Name", "GrandChild");
         grandChildMap.put("Direction", 311);
-        grandChildMap.put("Image Path", "data/Bone.png");
+        grandChildMap.put("Image Path", "src/main/resources/data/Bone.png");
 
         ArrayList<HashMap> childList = new ArrayList<>();
         grandChildMap.put("Child Map", childList);

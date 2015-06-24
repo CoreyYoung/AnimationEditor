@@ -1,4 +1,4 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -15,7 +15,7 @@ public class Bone {
     private String imagePath;
     private Image image;
     
-    public static final String DEFAULT_IMAGE_PATH = "data/Bone.png";
+    public static final String DEFAULT_IMAGE_PATH = "src/main/resources/data/Bone.png";
     public String name;
     public int dir;
     public LinkedList<Bone> childList = new LinkedList<>();

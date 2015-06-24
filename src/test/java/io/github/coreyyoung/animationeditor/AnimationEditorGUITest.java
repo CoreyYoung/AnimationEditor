@@ -1,4 +1,4 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import org.junit.Test;
 

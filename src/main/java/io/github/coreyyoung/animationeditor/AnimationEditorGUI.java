@@ -1,6 +1,7 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private static Timer timer;
     private static Listener listener;
     private static long startTime;
-    
+
     public static boolean isPlayingAnimation = false;
     public static AnimationEditorGUI self;
     public static Skeleton skeleton;
@@ -423,27 +424,37 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveSkeletonActionPerformed
 
     private void btnLoadSkeletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadSkeletonActionPerformed
-        try (FileReader fileReader = new FileReader("test.skeleton")) {
-            Yaml yaml = new Yaml();
-            HashMap<String, Object> fileMap = (HashMap<String, Object>) yaml.load(fileReader);
-            ArrayList<HashMap<String, Object>> boneList = (ArrayList<HashMap<String, Object>>) fileMap.get("Skeleton");
-            skeleton.setBoneList(boneList);
+        JFileChooser chooser = new JFileChooser();
+        File file = new File("src/main/resources/");
+        chooser.setCurrentDirectory(file);
+        int result = chooser.showOpenDialog(this);
 
-            HashMap<Integer, ArrayList> frameMap = (HashMap<Integer, ArrayList>) fileMap.get("Animation");
-            Animation.keyFrameList.clear();
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String path = chooser.getSelectedFile().getPath();
+            try (FileReader fileReader = new FileReader(path)) {
+                Yaml yaml = new Yaml();
+                HashMap<String, Object> fileMap = (HashMap<String, Object>) yaml.load(fileReader);
+                ArrayList<HashMap<String, Object>> boneList = (ArrayList<HashMap<String, Object>>) fileMap.get("Skeleton");
+                skeleton.setBoneList(boneList);
 
-            for (int frameTime : frameMap.keySet()) {
-                Skeleton frameSkeleton = new Skeleton();
-                frameSkeleton.setBoneList(frameMap.get(frameTime));
-                KeyFrame frame = new KeyFrame(frameTime, frameSkeleton);
-                Animation.addKeyFrame(frame);
+                HashMap<Integer, ArrayList> frameMap = (HashMap<Integer, ArrayList>) fileMap.get("Animation");
+                Animation.keyFrameList.clear();
+
+                for (int frameTime : frameMap.keySet()) {
+                    Skeleton frameSkeleton = new Skeleton();
+                    frameSkeleton.setBoneList(frameMap.get(frameTime));
+                    KeyFrame frame = new KeyFrame(frameTime, frameSkeleton);
+                    Animation.addKeyFrame(frame);
+                }
+
+                updateBoneTree();
+                updateFrameTree();
+            } catch (IOException e) {
+                System.err.println(e);
             }
-
-            updateBoneTree();
-            updateFrameTree();
-        } catch (IOException e) {
-            System.err.println(e);
         }
+
+
     }//GEN-LAST:event_btnLoadSkeletonActionPerformed
 
     private void btnRenameBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenameBoneActionPerformed
@@ -482,18 +493,20 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         Bone bone = getSelectedBone();
 
         if (bone != null) {
-            String dataDir = System.getProperty("user.dir") + "/data";
-            JFileChooser fileChooser = new JFileChooser(dataDir);
+            JFileChooser chooser = new JFileChooser();
+            File file = new File("src/main/resources/data/");
+            chooser.setCurrentDirectory(file);
+            int result = chooser.showOpenDialog(this);
 
-            fileChooser.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String path = chooser.getSelectedFile().getPath();
 
-            String path = fileChooser.getSelectedFile().getPath();
+                for (KeyFrame frame : Animation.keyFrameList) {
+                    frame.getSkeleton().getBone(bone.name).setImage(path);
+                }
 
-            for (KeyFrame frame : Animation.keyFrameList) {
-                frame.getSkeleton().getBone(bone.name).setImage(path);
+                bone.setImage(path);
             }
-
-            bone.setImage(path);
         }
     }//GEN-LAST:event_btnSetImageActionPerformed
 
@@ -562,17 +575,16 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * Gets the time in milliseconds since the animation started playing.
-     * 
+     *
      * @return The time in milliseconds since the animation started playing.
      */
     public static long getTime() {
         return System.currentTimeMillis() - startTime;
     }
-    
-    
+
     /**
      * Resets the startTime to the current time.
      */
@@ -682,7 +694,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         if (frameTree.getLastSelectedPathComponent() != null) {
             String name = frameTree.getLastSelectedPathComponent().toString();
             KeyFrame frame = null;
-            
+
             try {
                 int time = Integer.parseInt(name);
                 frame = Animation.getKeyFrame(time);

@@ -1,4 +1,4 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import java.awt.Graphics;
 import javax.swing.JPanel;

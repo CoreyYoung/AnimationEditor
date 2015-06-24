@@ -1,4 +1,4 @@
-package animationeditor;
+package io.github.coreyyoung.animationeditor;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -112,15 +112,18 @@ public class Skeleton {
      */
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        Skeleton skeleton = null;
 
         if (AnimationEditorGUI.isPlayingAnimation) {
             if (Animation.getLastKeyFrame() != null
                     && AnimationEditorGUI.getTime() > Animation.getLastKeyFrame().getTime()) {
                 AnimationEditorGUI.resetTime();
             }
+            
+            skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
         }
 
-        Skeleton skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
+        
 
         if (skeleton == null) {
             skeleton = this;
