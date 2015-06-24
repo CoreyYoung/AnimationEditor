@@ -84,8 +84,6 @@ public class SkeletonTest {
         assert (skeleton.boneList.get(0).name.equals(bone.name));
         assert (skeleton.boneList.get(0).childList.equals(bone.childList));
         assert (skeleton.boneList.get(0).dir == (bone.dir));
-        assert (skeleton.boneList.get(0).image.equals(bone.image));
-        assert (skeleton.boneList.get(0).imagePath.equals(bone.imagePath));
     }
 
     /**

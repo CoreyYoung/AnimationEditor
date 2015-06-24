@@ -590,7 +590,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Updates the GUI Bone list so that the structure matches the Skeleton
+     * Updates the GUI Bone List so that the structure matches the Skeleton
      * object.
      */
     private void updateBoneTree() {
@@ -612,7 +612,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Updates the GUI KeyFrame list so that it matches the Animation object.
+     * Updates the GUI KeyFrame List so that it matches the Animation object.
      */
     private void updateFrameTree() {
         DefaultTreeModel model = (DefaultTreeModel) frameTree.getModel();
@@ -653,9 +653,9 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Gets the Bone currently selected in the GUI bone list.
+     * Gets the Bone currently selected in the GUI Bone List.
      *
-     * @return The selected Bone.
+     * @return The selected Bone. Returns null if no Bone is selected.
      */
     private Bone getSelectedBone() {
         if (boneTree.getLastSelectedPathComponent() != null) {
@@ -676,15 +676,17 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     /**
      * Gets the KeyFrame currently selected in the GUI frame list.
      *
-     * @return The selected KeyFrame.
+     * @return The selected KeyFrame. Returns null if no KeyFrame is selected.
      */
     private KeyFrame getSelectedKeyFrame() {
         if (frameTree.getLastSelectedPathComponent() != null) {
             String name = frameTree.getLastSelectedPathComponent().toString();
-            int time = Integer.parseInt(name);
-            KeyFrame frame = Animation.getKeyFrame(time);
-
-            if (frame == null) {
+            KeyFrame frame = null;
+            
+            try {
+                int time = Integer.parseInt(name);
+                frame = Animation.getKeyFrame(time);
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Error: No frame selected!");
             }
 

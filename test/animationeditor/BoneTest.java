@@ -2,8 +2,6 @@ package animationeditor;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -31,22 +29,6 @@ public class BoneTest {
         Bone bone = new Bone("Test", 0);
 
         bone.drawBone(g2d, x, y, dir);
-    }
-
-    /**
-     * Test of setImage method, of class Bone.
-     */
-    @Test
-    public void testSetImage() {
-        System.out.println("setImage");
-        String imagePath = "TestData/Bone.png";
-        Bone bone = new Bone("Test", 0);
-        bone.setImage(imagePath);
-
-        Image image = Toolkit.getDefaultToolkit().getImage(imagePath);
-
-        assertEquals(bone.image, image);
-        assert (bone.image != new Bone("Test 2", 0).image);
     }
 
     /**
