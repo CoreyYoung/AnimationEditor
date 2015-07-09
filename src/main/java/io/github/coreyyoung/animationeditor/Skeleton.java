@@ -11,7 +11,7 @@ public class Skeleton {
 
     private static final int x = 64;
     private static final int y = 32;
-    
+
     public LinkedList<Bone> boneList = new LinkedList<>();
 
     /**
@@ -119,11 +119,9 @@ public class Skeleton {
                     && AnimationEditorGUI.getTime() > Animation.getLastKeyFrame().getTime()) {
                 AnimationEditorGUI.resetTime();
             }
-            
+
             skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
         }
-
-        
 
         if (skeleton == null) {
             skeleton = this;

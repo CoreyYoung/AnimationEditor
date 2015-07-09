@@ -28,7 +28,7 @@ public class Animation {
                 result = frame;
             }
         }
-        
+
         return result;
     }
 
@@ -36,7 +36,8 @@ public class Animation {
      * Gets the KeyFrame at the given time.
      *
      * @param time The time of the required KeyFrame.
-     * @return The KeyFrame found at the given time. Returns null if no KeyFrame is found.
+     * @return The KeyFrame found at the given time. Returns null if no KeyFrame
+     * is found.
      */
     public static KeyFrame getKeyFrame(int time) {
         for (KeyFrame keyFrame : keyFrameList) {

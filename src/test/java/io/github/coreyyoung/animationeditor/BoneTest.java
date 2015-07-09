@@ -5,11 +5,25 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.tree.DefaultMutableTreeNode;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class BoneTest {
+
+    /**
+     * Test of setDirection method, of class Bone.
+     */
+    @Test
+    public void testSetDirection() {
+        System.out.println("setDirection");
+
+        AnimationEditorGUI.DisplayFrame = new JInternalFrame();
+        Bone bone = new Bone("Bone", 0);
+        bone.setDirection(100);
+        assert (bone.dir == 100);
+    }
 
     /**
      * Test of drawBone method, of class Bone.
@@ -27,6 +41,7 @@ public class BoneTest {
         int y = 0;
         int dir = 0;
         Bone bone = new Bone("Test", 0);
+        bone.childList.add(new Bone("Child", 0));
 
         bone.drawBone(g2d, x, y, dir);
     }
@@ -159,11 +174,16 @@ public class BoneTest {
 
         Bone parent = new Bone("Parent", 0);
         Bone child = new Bone("Child", 0);
+        Bone grandChild = new Bone("GrandChild", 0);
         Skeleton skeleton = new Skeleton();
         parent.childList.add(child);
+        child.childList.add(grandChild);
         skeleton.boneList.add(parent);
 
+        assertEquals(child, grandChild.getParent(skeleton));
         assertEquals(parent, child.getParent(skeleton));
+        assert (parent.getParent(skeleton) == null);
+        assert (new Bone("Bone", 0).getParent(skeleton) == null);
     }
 
     /**
@@ -173,17 +193,18 @@ public class BoneTest {
     public void testGetInterpolatedBone() {
         System.out.println("getInterpolatedBone");
 
-        String name = "Bone";
+        Bone bone1 = new Bone("Parent", 0);
+        bone1.childList.add(new Bone("Child", 0));
 
-        Bone bone1 = new Bone(name, 0);
-        Bone bone2 = new Bone(name, 100);
+        Bone bone2 = new Bone("Parent", 100);
+        bone2.childList.add(new Bone("Child", 100));
 
         Bone result1 = bone1.getInterpolatedBone(bone2, 0.1);
         Bone result2 = bone1.getInterpolatedBone(bone2, 0.5);
         Bone result3 = bone1.getInterpolatedBone(bone2, 0.7);
 
-        assert (result1.dir == 10);
-        assert (result2.dir == 50);
-        assert (result3.dir == 70);
+        assert (result1.dir == 10 && result1.getDescendant("Child").dir == 10);
+        assert (result2.dir == 50 && result2.getDescendant("Child").dir == 50);
+        assert (result3.dir == 70 && result3.getDescendant("Child").dir == 70);
     }
 }

@@ -14,7 +14,7 @@ public class Bone {
 
     private String imagePath;
     private Image image;
-    
+
     public static final String DEFAULT_IMAGE_PATH = "src/main/resources/data/Bone.png";
     public String name;
     public int dir;
@@ -185,15 +185,17 @@ public class Bone {
         }
 
         for (Bone bone : skeleton.boneList) {
-            while (!bone.childList.contains(this)) {
-                for (Bone child : bone.childList) {
-                    if (child.getDescendant(name) != null) {
-                        bone = child;
-                    }
-                }
+            if (bone.childList.contains(this)) {
+                return bone;
             }
 
-            return bone;
+            Skeleton newSkeleton = new Skeleton();
+            newSkeleton.boneList = bone.childList;
+            Bone parent = getParent(newSkeleton);
+
+            if (parent != null) {
+                return parent;
+            }
         }
 
         return null;

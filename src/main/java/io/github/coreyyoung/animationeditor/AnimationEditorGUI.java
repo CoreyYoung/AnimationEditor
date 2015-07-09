@@ -454,7 +454,6 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             }
         }
 
-
     }//GEN-LAST:event_btnLoadSkeletonActionPerformed
 
     private void btnRenameBoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenameBoneActionPerformed

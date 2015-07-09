@@ -19,10 +19,14 @@ public class SkeletonTest {
         Skeleton skeleton = new Skeleton();
 
         Bone bone = new Bone("Test Bone", 0);
+        bone.childList.add(new Bone("Child", 0));
         skeleton.boneList.add(bone);
 
         assert (!skeleton.boneList.isEmpty());
 
+        skeleton.removeBone("Child");
+        assert (bone.childList.isEmpty());
+        
         skeleton.removeBone(bone.name);
         assert (skeleton.boneList.isEmpty());
     }
