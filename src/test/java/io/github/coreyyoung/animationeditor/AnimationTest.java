@@ -12,12 +12,11 @@ public class AnimationTest {
     public void testAddKeyFrame() {
         System.out.println("addKeyFrame");
 
+        Animation animation = new Animation();
         KeyFrame frame = new KeyFrame(0, new Skeleton());
+        animation.addKeyFrame(frame);
 
-        Animation.keyFrameList.clear();
-        Animation.addKeyFrame(frame);
-
-        assert (Animation.keyFrameList.contains(frame));
+        assert (animation.keyFrameList.contains(frame));
     }
 
     /**
@@ -27,19 +26,19 @@ public class AnimationTest {
     public void testGetLastKeyFrame() {
         System.out.println("getLastKeyFrame");
 
-        Animation.keyFrameList.clear();
+        Animation animation = new Animation();
 
         KeyFrame frame = new KeyFrame(100, new Skeleton());
-        Animation.keyFrameList.add(frame);
-        assert (Animation.getLastKeyFrame() == frame);
+        animation.keyFrameList.add(frame);
+        assert (animation.getLastKeyFrame() == frame);
 
         KeyFrame frame2 = new KeyFrame(1000, new Skeleton());
-        Animation.keyFrameList.add(frame2);
-        assert (Animation.getLastKeyFrame() == frame2);
+        animation.keyFrameList.add(frame2);
+        assert (animation.getLastKeyFrame() == frame2);
 
         KeyFrame frame3 = new KeyFrame(200, new Skeleton());
-        Animation.keyFrameList.add(frame3);
-        assert (Animation.getLastKeyFrame() != frame3);
+        animation.keyFrameList.add(frame3);
+        assert (animation.getLastKeyFrame() != frame3);
     }
 
     /**
@@ -48,17 +47,18 @@ public class AnimationTest {
     @Test
     public void testGetKeyFrame() {
         System.out.println("getKeyFrame");
-
-        Animation.keyFrameList.clear();
+        Animation animation = new Animation();
 
         int time = 0;
         KeyFrame expResult = null;
-        KeyFrame result = Animation.getKeyFrame(time);
+        KeyFrame result = animation.getKeyFrame(time);
         assertEquals(expResult, result);
 
-        Animation.addKeyFrame(new KeyFrame(time, new Skeleton()));
-        result = Animation.getKeyFrame(time);
+        animation.addKeyFrame(new KeyFrame(time, new Skeleton()));
+        result = animation.getKeyFrame(time);
         assertEquals(result.getTime(), time);
+        
+        assertEquals(animation.getKeyFrame(123), null);
     }
 
     /**
@@ -68,20 +68,20 @@ public class AnimationTest {
     public void testGetInterpolatedSkeleton() {
         System.out.println("getInterpolatedSkeleton");
 
-        Animation.keyFrameList.clear();
+        Animation animation = new Animation();
 
         Skeleton skeleton = new Skeleton();
         skeleton.boneList.add(new Bone("Bone", 0));
         KeyFrame frame = new KeyFrame(0, skeleton);
-        Animation.addKeyFrame(frame);
+        animation.addKeyFrame(frame);
 
         Skeleton skeleton2 = new Skeleton();
         skeleton2.boneList.add(new Bone("Bone", 100));
         KeyFrame frame2 = new KeyFrame(100, skeleton2);
-        Animation.addKeyFrame(frame2);
+        animation.addKeyFrame(frame2);
 
-        assertEquals(Animation.getInterpolatedSkeleton(34).getBone("Bone").dir, 34);
-        assertEquals(Animation.getInterpolatedSkeleton(50).getBone("Bone").dir, 50);
-        assertEquals(Animation.getInterpolatedSkeleton(96).getBone("Bone").dir, 96);
+        assertEquals(animation.getInterpolatedSkeleton(34).getBone("Bone").dir, 34);
+        assertEquals(animation.getInterpolatedSkeleton(50).getBone("Bone").dir, 50);
+        assertEquals(animation.getInterpolatedSkeleton(96).getBone("Bone").dir, 96);
     }
 }

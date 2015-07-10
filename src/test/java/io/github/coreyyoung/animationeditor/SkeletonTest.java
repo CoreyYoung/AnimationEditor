@@ -41,12 +41,16 @@ public class SkeletonTest {
         Skeleton skeleton = new Skeleton();
 
         Bone bone1 = new Bone("Bone 1", 0);
+        Bone child = new Bone("Child", 0);
+        bone1.childList.add(child);
         Bone bone2 = new Bone("Bone 2", 0);
         skeleton.boneList.add(bone1);
         skeleton.boneList.add(bone2);
 
         assertEquals(skeleton.getBone("Bone 1"), bone1);
         assertEquals(skeleton.getBone("Bone 2"), bone2);
+        assertEquals(skeleton.getBone("Child"), child);
+        assertEquals(skeleton.getBone("No bone"), null);
     }
 
     /**
@@ -81,13 +85,18 @@ public class SkeletonTest {
         Skeleton skeleton = new Skeleton();
 
         Bone bone = new Bone("Test Bone", 0);
+        Bone child = new Bone("Child", 100);
+        bone.childList.add(child);
+        
         ArrayList<HashMap<String, Object>> fileMap = new ArrayList<>();
         fileMap.add(bone.getBoneMap());
         skeleton.setBoneList(fileMap);
 
-        assert (skeleton.boneList.get(0).name.equals(bone.name));
-        assert (skeleton.boneList.get(0).childList.equals(bone.childList));
-        assert (skeleton.boneList.get(0).dir == (bone.dir));
+        assertEquals(skeleton.boneList.getFirst().name, bone.name);
+        assertEquals(skeleton.boneList.getFirst().dir, bone.dir);
+        
+        assertEquals(skeleton.boneList.getFirst().childList.getFirst().name, child.name);
+        assertEquals(skeleton.boneList.getFirst().childList.getFirst().dir, child.dir);
     }
 
     /**
@@ -102,6 +111,13 @@ public class SkeletonTest {
 
         JFrame frame = new JFrame();
         frame.setVisible(true);
+        
+        Animation animation = new Animation();
+        animation.addKeyFrame(new KeyFrame(0, skeleton));
+        animation.addKeyFrame(new KeyFrame(100, skeleton));
+        
+        AnimationEditorGUI.isPlayingAnimation = true;
+        AnimationEditorGUI.animation = animation;
 
         Graphics graphics = frame.getGraphics();
         skeleton.render(graphics);

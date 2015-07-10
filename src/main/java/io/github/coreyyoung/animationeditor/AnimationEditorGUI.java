@@ -25,6 +25,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     public static boolean isPlayingAnimation = false;
     public static AnimationEditorGUI self;
     public static Skeleton skeleton;
+    public static Animation animation = new Animation();
 
     /**
      * initializes the program.
@@ -327,7 +328,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
         Bone bone = new Bone(boneName, Bone.DEFAULT_IMAGE_PATH, 0);
 
-        for (KeyFrame frame : Animation.keyFrameList) {
+        for (KeyFrame frame : animation.keyFrameList) {
             frame.getSkeleton().boneList.add(bone);
         }
 
@@ -339,7 +340,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         Bone bone = getSelectedBone();
 
         if (bone != null) {
-            for (KeyFrame frame : Animation.keyFrameList) {
+            for (KeyFrame frame : animation.keyFrameList) {
                 frame.getSkeleton().removeBone(bone.name);
             }
 
@@ -373,7 +374,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 } else if (child.getDescendant(parentName) != null) {
                     JOptionPane.showMessageDialog(null, "Error: Parent cannot be descendant of child!");
                 } else {
-                    for (KeyFrame frame : Animation.keyFrameList) {
+                    for (KeyFrame frame : animation.keyFrameList) {
                         Bone frameChild = frame.getSkeleton().getBone(child.name);
                         frame.getSkeleton().removeBone(frameChild.name);
                         frame.getSkeleton().getBone(parent.name).childList.add(frameChild);
@@ -391,7 +392,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         Bone bone = getSelectedBone();
 
         if (bone != null) {
-            for (KeyFrame frame : Animation.keyFrameList) {
+            for (KeyFrame frame : animation.keyFrameList) {
                 Bone frameBone = frame.getSkeleton().getBone(bone.name);
 
                 frame.getSkeleton().removeBone(bone.name);
@@ -412,7 +413,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
         HashMap<Integer, ArrayList<HashMap<String, Object>>> animationMap = new HashMap<>();
 
-        for (KeyFrame frame : Animation.keyFrameList) {
+        for (KeyFrame frame : animation.keyFrameList) {
             animationMap.put(frame.getTime(), frame.getSkeleton().getBoneList());
         }
 
@@ -438,13 +439,13 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
                 skeleton.setBoneList(boneList);
 
                 HashMap<Integer, ArrayList> frameMap = (HashMap<Integer, ArrayList>) fileMap.get("Animation");
-                Animation.keyFrameList.clear();
+                animation.keyFrameList.clear();
 
                 for (int frameTime : frameMap.keySet()) {
                     Skeleton frameSkeleton = new Skeleton();
                     frameSkeleton.setBoneList(frameMap.get(frameTime));
                     KeyFrame frame = new KeyFrame(frameTime, frameSkeleton);
-                    Animation.addKeyFrame(frame);
+                    animation.addKeyFrame(frame);
                 }
 
                 updateBoneTree();
@@ -463,7 +464,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             String newName = JOptionPane.showInputDialog("Enter New Name:", bone.name);
 
             if (skeleton.getBone(newName) == null && newName != null) {
-                for (KeyFrame frame : Animation.keyFrameList) {
+                for (KeyFrame frame : animation.keyFrameList) {
                     frame.getSkeleton().getBone(bone.name).name = newName;
                 }
 
@@ -500,7 +501,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
             if (result == JFileChooser.APPROVE_OPTION) {
                 String path = chooser.getSelectedFile().getPath();
 
-                for (KeyFrame frame : Animation.keyFrameList) {
+                for (KeyFrame frame : animation.keyFrameList) {
                     frame.getSkeleton().getBone(bone.name).setImage(path);
                 }
 
@@ -514,12 +515,12 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
         try {
             int frameTime = Integer.parseInt(input);
 
-            if (Animation.getKeyFrame(frameTime) == null) {
+            if (animation.getKeyFrame(frameTime) == null) {
                 Skeleton newSkeleton = new Skeleton();
                 newSkeleton.setBoneList(skeleton.getBoneList());
 
                 KeyFrame frame = new KeyFrame(frameTime, newSkeleton);
-                Animation.addKeyFrame(frame);
+                animation.addKeyFrame(frame);
             } else {
                 JOptionPane.showMessageDialog(null, "Error: Frame already exists for given time!");
             }
@@ -539,7 +540,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
     private void btnRemoveFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFrameActionPerformed
         KeyFrame frame = getSelectedKeyFrame();
 
-        Animation.keyFrameList.remove(frame);
+        animation.keyFrameList.remove(frame);
         updateFrameTree();
     }//GEN-LAST:event_btnRemoveFrameActionPerformed
 
@@ -631,7 +632,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
         root.removeAllChildren();
 
-        for (KeyFrame keyFrame : Animation.keyFrameList) {
+        for (KeyFrame keyFrame : animation.keyFrameList) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(keyFrame.getTime());
             root.add(node);
         }
@@ -696,7 +697,7 @@ public class AnimationEditorGUI extends javax.swing.JFrame {
 
             try {
                 int time = Integer.parseInt(name);
-                frame = Animation.getKeyFrame(time);
+                frame = animation.getKeyFrame(time);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Error: No frame selected!");
             }

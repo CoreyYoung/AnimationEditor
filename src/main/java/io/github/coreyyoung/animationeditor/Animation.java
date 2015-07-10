@@ -4,14 +4,14 @@ import java.util.LinkedList;
 
 public class Animation {
 
-    public static LinkedList<KeyFrame> keyFrameList = new LinkedList<>();
+    public LinkedList<KeyFrame> keyFrameList = new LinkedList<>();
 
     /**
      * Adds a KeyFrame to the animation.
      *
      * @param frame The KeyFrame to add to the animation.
      */
-    public static void addKeyFrame(KeyFrame frame) {
+    public void addKeyFrame(KeyFrame frame) {
         keyFrameList.add(frame);
     }
 
@@ -20,7 +20,7 @@ public class Animation {
      *
      * @return The last KeyFrame. Returns null if no KeyFrame is found.
      */
-    public static KeyFrame getLastKeyFrame() {
+    public KeyFrame getLastKeyFrame() {
         KeyFrame result = null;
 
         for (KeyFrame frame : keyFrameList) {
@@ -39,7 +39,7 @@ public class Animation {
      * @return The KeyFrame found at the given time. Returns null if no KeyFrame
      * is found.
      */
-    public static KeyFrame getKeyFrame(int time) {
+    public KeyFrame getKeyFrame(int time) {
         for (KeyFrame keyFrame : keyFrameList) {
             if (keyFrame.getTime() == time) {
                 return keyFrame;
@@ -55,7 +55,7 @@ public class Animation {
      * @param time The time to get the Skeleton for.
      * @return The Skeleton for the given time.
      */
-    public static Skeleton getInterpolatedSkeleton(long time) {
+    public Skeleton getInterpolatedSkeleton(long time) {
         Skeleton skeleton = null;
         KeyFrame frame1 = null;
         KeyFrame frame2 = null;

@@ -115,12 +115,12 @@ public class Skeleton {
         Skeleton skeleton = null;
 
         if (AnimationEditorGUI.isPlayingAnimation) {
-            if (Animation.getLastKeyFrame() != null
-                    && AnimationEditorGUI.getTime() > Animation.getLastKeyFrame().getTime()) {
+            if (AnimationEditorGUI.animation.getLastKeyFrame() != null
+                    && AnimationEditorGUI.getTime() > AnimationEditorGUI.animation.getLastKeyFrame().getTime()) {
                 AnimationEditorGUI.resetTime();
             }
 
-            skeleton = Animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
+            skeleton = AnimationEditorGUI.animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
         }
 
         if (skeleton == null) {
