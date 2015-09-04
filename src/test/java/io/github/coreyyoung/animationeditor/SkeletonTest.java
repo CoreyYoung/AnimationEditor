@@ -26,7 +26,7 @@ public class SkeletonTest {
 
         skeleton.removeBone("Child");
         assert (bone.childList.isEmpty());
-        
+
         skeleton.removeBone(bone.name);
         assert (skeleton.boneList.isEmpty());
     }
@@ -87,14 +87,14 @@ public class SkeletonTest {
         Bone bone = new Bone("Test Bone", 0);
         Bone child = new Bone("Child", 100);
         bone.childList.add(child);
-        
+
         ArrayList<HashMap<String, Object>> fileMap = new ArrayList<>();
         fileMap.add(bone.getBoneMap());
         skeleton.setBoneList(fileMap);
 
         assertEquals(skeleton.boneList.getFirst().name, bone.name);
         assertEquals(skeleton.boneList.getFirst().dir, bone.dir);
-        
+
         assertEquals(skeleton.boneList.getFirst().childList.getFirst().name, child.name);
         assertEquals(skeleton.boneList.getFirst().childList.getFirst().dir, child.dir);
     }
@@ -111,11 +111,11 @@ public class SkeletonTest {
 
         JFrame frame = new JFrame();
         frame.setVisible(true);
-        
+
         Animation animation = new Animation();
-        animation.addKeyFrame(new KeyFrame(0, skeleton));
-        animation.addKeyFrame(new KeyFrame(100, skeleton));
-        
+        //animation.addKeyFrame(new KeyFrame(0, skeleton));
+        //animation.addKeyFrame(new KeyFrame(100, skeleton));
+
         AnimationEditorGUI.isPlayingAnimation = true;
         AnimationEditorGUI.animation = animation;
 

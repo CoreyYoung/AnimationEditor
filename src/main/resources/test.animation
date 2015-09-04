@@ -1,0 +1,29 @@
+0:
+  LeftLowerArm: 25
+  LeftLowerLeg: -10
+  LeftUpperArm: -60
+  LeftUpperLeg: 40
+  RightLowerArm: 15
+  RightLowerLeg: -10
+  RightUpperArm: 50
+  RightUpperLeg: -45
+
+500:
+  LeftLowerArm: 25
+  LeftLowerLeg: -10
+  LeftUpperArm: 60
+  LeftUpperLeg: -40
+  RightLowerArm: 15
+  RightLowerLeg: -10
+  RightUpperArm: -50
+  RightUpperLeg: 45
+
+1000:
+  LeftLowerArm: 25
+  LeftLowerLeg: -10
+  LeftUpperArm: -60
+  LeftUpperLeg: 40
+  RightLowerArm: 15
+  RightLowerLeg: -10
+  RightUpperArm: 50
+  RightUpperLeg: -45

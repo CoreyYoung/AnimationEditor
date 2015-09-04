@@ -1,19 +1,15 @@
 package io.github.coreyyoung.animationeditor;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javafx.scene.control.TreeItem;
 
 public class Bone {
 
     private String imagePath;
-    private Image image;
+    //private Image image;
 
     public static final String DEFAULT_IMAGE_PATH = "src/main/resources/data/Bone.png";
     public String name;
@@ -28,7 +24,7 @@ public class Bone {
      * @param dir The direction of the new Bone.
      */
     public Bone(String name, String imagePath, int dir) {
-        setImage(imagePath);
+        //setImage(imagePath);
         this.dir = dir;
         this.name = name;
     }
@@ -40,7 +36,7 @@ public class Bone {
      * @param dir The direction of the new Bone.
      */
     public Bone(String name, int dir) {
-        setImage(DEFAULT_IMAGE_PATH);
+        //setImage(DEFAULT_IMAGE_PATH);
         this.dir = dir;
         this.name = name;
     }
@@ -53,26 +49,25 @@ public class Bone {
      * @param y The y-coordinate to draw the Bone at.
      * @param dir The direction of rotation to draw the Bone
      */
-    public void drawBone(Graphics2D g2d, int x, int y, int dir) {
-        int width = image.getWidth(null);
-        int length = image.getHeight(null);
-        dir += this.dir;
-
-        AffineTransform oldTransform = g2d.getTransform();
-        g2d.translate(x, y);
-        g2d.rotate(Math.toRadians(-dir));
-        g2d.translate(-width / 2, 0);
-        g2d.drawImage(image, 0, 0, width, length, null);
-        g2d.setTransform(oldTransform);
-
-        int endX = x + (int) (length * Math.sin(Math.toRadians(dir)));
-        int endY = y + (int) (length * Math.cos(Math.toRadians(dir)));
-
-        for (Bone child : childList) {
-            child.drawBone(g2d, endX, endY, dir);
-        }
-    }
-
+//    public void drawBone(Graphics2D g2d, int x, int y, int dir) {
+//        int width = image.getWidth(null);
+//        int length = image.getHeight(null);
+//        dir += this.dir;
+//
+//        AffineTransform oldTransform = g2d.getTransform();
+//        g2d.translate(x, y);
+//        g2d.rotate(Math.toRadians(-dir));
+//        g2d.translate(-width / 2, 0);
+//        g2d.drawImage(image, 0, 0, width, length, null);
+//        g2d.setTransform(oldTransform);
+//
+//        int endX = x + (int) (length * Math.sin(Math.toRadians(dir)));
+//        int endY = y + (int) (length * Math.cos(Math.toRadians(dir)));
+//
+//        for (Bone child : childList) {
+//            child.drawBone(g2d, endX, endY, dir);
+//        }
+//    }
     /**
      * Sets the direction of the Bone.
      *
@@ -80,19 +75,18 @@ public class Bone {
      */
     public void setDirection(int dir) {
         this.dir = dir;
-        AnimationEditorGUI.DisplayFrame.repaint();
+        //AnimationEditorGUI.DisplayFrame.repaint();
     }
 
-    /**
-     * Sets the image of the Bone.
-     *
-     * @param imagePath The URI of the new image of the Bone.
-     */
-    public void setImage(String imagePath) {
-        this.imagePath = imagePath;
-        image = Toolkit.getDefaultToolkit().getImage(imagePath);
-    }
-
+//    /**
+//     * Sets the image of the Bone.
+//     *
+//     * @param imagePath The URI of the new image of the Bone.
+//     */
+//    public void setImage(String imagePath) {
+//        this.imagePath = imagePath;
+//        image = Toolkit.getDefaultToolkit().getImage(imagePath);
+//    }
     /**
      * Searches child Bones recursively for a Bone with a given name.
      *
@@ -135,16 +129,16 @@ public class Bone {
     }
 
     /**
-     * Creates a DefaultMutableTreeNode with the same structure as the Bone map.
+     * Creates a TreeItem<String> with the same structure as the Bone map.
      *
-     * @return The new DefaultMutableTreeNode.
+     * @return The new TreeItem.
      */
-    public DefaultMutableTreeNode getTreeBranch() {
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(name);
+    public TreeItem<String> getTreeBranch() {
+        TreeItem<String> node = new TreeItem<>(name);
 
         for (Bone child : childList) {
-            DefaultMutableTreeNode childNode = child.getTreeBranch();
-            node.add(childNode);
+            TreeItem<String> childNode = child.getTreeBranch();
+            node.getChildren().add(childNode);
         }
 
         return node;

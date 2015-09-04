@@ -1,6 +1,9 @@
 package io.github.coreyyoung.animationeditor;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 public class Animation {
 
@@ -80,9 +83,32 @@ public class Animation {
             double position = time - frame1.getTime();
             double amount = (position / duration);
 
-            skeleton = frame1.getSkeleton().getInterpolatedSkeleton(frame2.getSkeleton(), amount);
+            //skeleton = frame1.getSkeleton().getInterpolatedSkeleton(frame2.getSkeleton(), amount);
         }
 
         return skeleton;
+    }
+
+    public void setKeyFrameList(HashMap<Integer, HashMap<String, Integer>> frameMap) {
+        keyFrameList.clear();
+
+        for (int time : frameMap.keySet()) {
+            KeyFrame frame = new KeyFrame(time, frameMap.get(time));
+            keyFrameList.add(frame);
+        }
+    }
+
+    public TreeView<String> getTree() {
+        TreeItem<String> root = new TreeItem<>("Animation");
+
+        for (KeyFrame frame : keyFrameList) {
+            TreeItem<String> branch = frame.getTreeBranch();
+
+            root.getChildren().add(branch);
+        }
+
+        root.setExpanded(true);
+
+        return new TreeView(root);
     }
 }

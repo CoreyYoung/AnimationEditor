@@ -1,11 +1,11 @@
 package io.github.coreyyoung.animationeditor;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 public class Skeleton {
 
@@ -105,33 +105,32 @@ public class Skeleton {
         return result;
     }
 
-    /**
-     * Renders the Skeleton.
-     *
-     * @param g The Graphics object that draws the Skeleton.
-     */
-    public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        Skeleton skeleton = null;
-
-        if (AnimationEditorGUI.isPlayingAnimation) {
-            if (AnimationEditorGUI.animation.getLastKeyFrame() != null
-                    && AnimationEditorGUI.getTime() > AnimationEditorGUI.animation.getLastKeyFrame().getTime()) {
-                AnimationEditorGUI.resetTime();
-            }
-
-            skeleton = AnimationEditorGUI.animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
-        }
-
-        if (skeleton == null) {
-            skeleton = this;
-        }
-
-        for (Bone bone : skeleton.boneList) {
-            bone.drawBone(g2d, x, y, 0);
-        }
-    }
-
+//    /**
+//     * Renders the Skeleton.
+//     *
+//     * @param g The Graphics object that draws the Skeleton.
+//     */
+//    public void render(Graphics g) {
+//        Graphics2D g2d = (Graphics2D) g;
+//        Skeleton skeleton = null;
+//
+//        if (AnimationEditorGUI.isPlayingAnimation) {
+//            if (AnimationEditorGUI.animation.getLastKeyFrame() != null
+//                    && AnimationEditorGUI.getTime() > AnimationEditorGUI.animation.getLastKeyFrame().getTime()) {
+//                AnimationEditorGUI.resetTime();
+//            }
+//
+//            skeleton = AnimationEditorGUI.animation.getInterpolatedSkeleton(AnimationEditorGUI.getTime());
+//        }
+//
+//        if (skeleton == null) {
+//            skeleton = this;
+//        }
+//
+//        for (Bone bone : skeleton.boneList) {
+//            bone.drawBone(g2d, x, y, 0);
+//        }
+//    }
     /**
      * Loads a Bone from data stored in a HashMap.
      *
@@ -158,5 +157,18 @@ public class Skeleton {
         bone.childList = childList;
 
         return bone;
+    }
+
+    public TreeView<String> getTree() {
+        TreeItem<String> root = new TreeItem<>("Skeleton");
+
+        for (Bone bone : boneList) {
+            TreeItem<String> branch = bone.getTreeBranch();
+            root.getChildren().add(branch);
+        }
+
+        root.setExpanded(true);
+
+        return new TreeView<>(root);
     }
 }
