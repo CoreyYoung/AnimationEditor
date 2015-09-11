@@ -30,34 +30,49 @@ public class AnimationEditorGUI extends Application {
     public static Skeleton skeleton;
     public static Animation animation;
 
-    private static TreeView<String> skeletonTree;
-    private static TreeView<String> animationTree;
-
+    private static final BorderPane border = new BorderPane();
     private static final CanvasPane canvasPane = new CanvasPane();
+
+    private static TreeView<String> skeletonTree = new TreeView<>();
+    private static TreeView<String> animationTree = new TreeView<>();
 
     @Override
     public void start(Stage stage) throws FileNotFoundException {
-        //skeleton = loadSkeleton();
-        animation = loadAnimation();
-
-        stage.setTitle("AnimationEditor");
+        stage.setTitle("Animation Editor");
 
         if (skeleton != null) {
-            skeletonTree = skeleton.getTree();
-        } else {
-            skeletonTree = new TreeView<>();
+            updateSkeletonTree();
         }
 
-        animationTree = animation.getTree();
+        if (animation != null) {
+            updateAnimationTree();
+        }
 
         MenuItem fileLoadSkeleton = new MenuItem("Load Skeleton");
+        MenuItem fileLoadAnimation = new MenuItem("Load Animation");
+
+        Menu fileMenu = new Menu("File");
+        fileMenu.getItems().addAll(fileLoadSkeleton, fileLoadAnimation);
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(fileMenu);
+
+        border.setTop(menuBar);
+        border.setLeft(skeletonTree);
+        border.setCenter(canvasPane);
+        border.setRight(animationTree);
+
+        Scene scene = new Scene(border, 800, 600);
+        stage.setScene(scene);
+        stage.show();
+
         fileLoadSkeleton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
                 if (event.getEventType() == ActionEvent.ACTION) {
                     try {
                         skeleton = loadSkeleton();
-                        skeletonTree = skeleton.getTree();
+                        updateSkeletonTree();
                     } catch (FileNotFoundException e) {
                         System.err.print(e);
                     }
@@ -65,21 +80,19 @@ public class AnimationEditorGUI extends Application {
             }
         });
 
-        Menu fileMenu = new Menu("File");
-        fileMenu.getItems().add(fileLoadSkeleton);
-
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().add(fileMenu);
-
-        BorderPane border = new BorderPane();
-        border.setTop(menuBar);
-        border.setLeft(skeletonTree);
-        border.setCenter(canvasPane);
-        border.setRight(animationTree);
-
-        Scene scene = new Scene(border, 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        fileLoadAnimation.setOnAction(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                if (event.getEventType() == ActionEvent.ACTION) {
+                    try {
+                        animation = loadAnimation();
+                        updateAnimationTree();
+                    } catch (FileNotFoundException e) {
+                        System.err.print(e);
+                    }
+                }
+            }
+        });
     }
 
     public static void main(String args[]) {
@@ -112,43 +125,30 @@ public class AnimationEditorGUI extends Application {
     }
 
     /**
-     * Updates the GUI Bone List so that the structure matches the Skeleton
+     * Updates the GUI Skeleton Tree so that the structure matches the Skeleton
      * object.
      */
-    private void updateBoneTree() {
-        //DefaultTreeModel model = (DefaultTreeModel) boneTree.getModel();
-        //DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+    private void updateSkeletonTree() {
+        if (skeleton != null) {
+            skeletonTree = skeleton.getTree();
+        } else {
+            skeletonTree = new TreeView<>();
+        }
 
-        //root.removeAllChildren();
-        //for (Bone bone : skeleton.boneList) {
-        //    DefaultMutableTreeNode node = bone.getTreeBranch();
-        //    root.add(node);
-        //}
-        //model.nodeStructureChanged(root);
-        //for (int i = 0; i < boneTree.getRowCount(); i++) {
-        //    boneTree.expandRow(i);
-        ///}
+        border.setLeft(skeletonTree);
     }
 
     /**
-     * Updates the GUI KeyFrame List so that it matches the Animation object.
+     * Updates the GUI Animation Tree so that it matches the Animation object.
      */
-    private void updateFrameTree() {
-        //DefaultTreeModel model = (DefaultTreeModel) frameTree.getModel();
-        //DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+    private void updateAnimationTree() {
+        if (animation != null) {
+            animationTree = animation.getTree();
+        } else {
+            animationTree = new TreeView<>();
+        }
 
-//        root.removeAllChildren();
-//
-//        for (KeyFrame keyFrame : animation.keyFrameList) {
-//            DefaultMutableTreeNode node = new DefaultMutableTreeNode(keyFrame.getTime());
-//            root.add(node);
-//        }
-//
-//        model.nodeStructureChanged(root);
-//
-//        for (int i = 0; i < frameTree.getRowCount(); i++) {
-//            frameTree.expandRow(i);
-//        }
+        border.setRight(animationTree);
     }
 
     /**
@@ -177,18 +177,6 @@ public class AnimationEditorGUI extends Application {
      * @return The selected Bone. Returns null if no Bone is selected.
      */
     private Bone getSelectedBone() {
-//        if (boneTree.getLastSelectedPathComponent() != null) {
-//            String selectedBoneName = boneTree.getLastSelectedPathComponent().toString();
-//            Bone bone = skeleton.getBone(selectedBoneName);
-//
-//            if (bone == null) {
-//                JOptionPane.showMessageDialog(null, "Error: No bone selected!");
-//            }
-//
-//            return bone;
-//        }
-//
-//        JOptionPane.showMessageDialog(null, "Error: No bone selected!");
         return null;
     }
 
@@ -198,21 +186,6 @@ public class AnimationEditorGUI extends Application {
      * @return The selected KeyFrame. Returns null if no KeyFrame is selected.
      */
     private KeyFrame getSelectedKeyFrame() {
-//        if (frameTree.getLastSelectedPathComponent() != null) {
-//            String name = frameTree.getLastSelectedPathComponent().toString();
-//            KeyFrame frame = null;
-//
-//            try {
-//                int time = Integer.parseInt(name);
-//                frame = animation.getKeyFrame(time);
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(null, "Error: No frame selected!");
-//            }
-//
-//            return frame;
-//        }
-
-        //JOptionPane.showMessageDialog(null, "Error: No frame selected!");
         return null;
     }
 
