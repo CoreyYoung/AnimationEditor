@@ -13,59 +13,98 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.yaml.snakeyaml.Yaml;
 
 public class AnimationEditorGUI extends Application {
-
+    
     private static long startTime;
-
+    
     public static boolean isPlayingAnimation = false;
     public static AnimationEditorGUI self;
     public static Skeleton skeleton;
     public static Animation animation;
-
+    
     private static final BorderPane border = new BorderPane();
     private static final CanvasPane canvasPane = new CanvasPane();
-
+    private static final BorderPane leftPane = new BorderPane();
+    private static final FlowPane skeletonButtonPane = new FlowPane();
+    
     private static TreeView<String> skeletonTree = new TreeView<>();
     private static TreeView<String> animationTree = new TreeView<>();
-
+    
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         stage.setTitle("Animation Editor");
-
+        stage.setMaximized(true);
+        
         if (skeleton != null) {
             updateSkeletonTree();
         }
-
+        
         if (animation != null) {
             updateAnimationTree();
         }
-
+        
         MenuItem fileLoadSkeleton = new MenuItem("Load Skeleton");
         MenuItem fileLoadAnimation = new MenuItem("Load Animation");
-
+        
         Menu fileMenu = new Menu("File");
         fileMenu.getItems().addAll(fileLoadSkeleton, fileLoadAnimation);
-
+        
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(fileMenu);
-
+        
+        final int leftWidth = 240;
+        final int buttonSize = leftWidth / 2;
+        
+        Button btnAddBone = new Button("Add Bone");
+        Button btnRemoveBone = new Button("Remove Bone");
+        Button btnRenameBone = new Button("Rename Bone");
+        Button btnSetParent = new Button("Set Parent");
+        Button btnSetImage = new Button("Set Image");
+        Button btnSetRotation = new Button("Set Rotation");
+        
+        btnAddBone.setPrefWidth(buttonSize);
+        btnRemoveBone.setPrefWidth(buttonSize);
+        btnRenameBone.setPrefWidth(buttonSize);
+        btnSetParent.setPrefWidth(buttonSize);
+        btnSetImage.setPrefWidth(buttonSize);
+        btnSetRotation.setPrefWidth(buttonSize);
+        
+        Button button = new Button();
+        button.setPrefWidth(buttonSize);
+        
+        skeletonButtonPane.setPrefWidth(buttonSize * 2);
+        skeletonButtonPane.getChildren().addAll(
+                btnAddBone,
+                btnRemoveBone,
+                btnRenameBone,
+                btnSetParent,
+                btnSetImage,
+                btnSetRotation);
+        
+        leftPane.setPrefWidth(leftWidth);
+        leftPane.setCenter(skeletonTree);
+        leftPane.setBottom(skeletonButtonPane);
+        
         border.setTop(menuBar);
-        border.setLeft(skeletonTree);
+        border.setLeft(leftPane);
         border.setCenter(canvasPane);
         border.setRight(animationTree);
 
+        //Size params set default for unmaximised window, but don't affect maximised window.
         Scene scene = new Scene(border, 800, 600);
         stage.setScene(scene);
         stage.show();
-
+        
         fileLoadSkeleton.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
@@ -79,7 +118,7 @@ public class AnimationEditorGUI extends Application {
                 }
             }
         });
-
+        
         fileLoadAnimation.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
@@ -94,7 +133,7 @@ public class AnimationEditorGUI extends Application {
             }
         });
     }
-
+    
     public static void main(String args[]) {
         launch(args);
     }
@@ -134,8 +173,8 @@ public class AnimationEditorGUI extends Application {
         } else {
             skeletonTree = new TreeView<>();
         }
-
-        border.setLeft(skeletonTree);
+        
+        AnimationEditorGUI.leftPane.setCenter(skeletonTree);
     }
 
     /**
@@ -147,7 +186,7 @@ public class AnimationEditorGUI extends Application {
         } else {
             animationTree = new TreeView<>();
         }
-
+        
         border.setRight(animationTree);
     }
 
@@ -160,9 +199,9 @@ public class AnimationEditorGUI extends Application {
     private void saveYaml(String fileName, String fileContents) {
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-
+                
                 bufferedWriter.write(fileContents);
-
+                
                 bufferedWriter.close();
                 fileWriter.close();
             }
@@ -189,30 +228,42 @@ public class AnimationEditorGUI extends Application {
         return null;
     }
 
+    /**
+     * Loads a Skeleton object from a file.
+     *
+     * @return The loaded Skeleton Object.
+     * @throws FileNotFoundException
+     */
     private static Skeleton loadSkeleton() throws FileNotFoundException {
         File file = new File("src/main/resources/test.skeleton");
         FileReader fileReader = new FileReader(file);
-
+        
         Yaml yaml = new Yaml();
         HashMap<String, Object> fileMap = (HashMap<String, Object>) yaml.load(fileReader);
         ArrayList<HashMap<String, Object>> boneList = (ArrayList<HashMap<String, Object>>) fileMap.get("Skeleton");
-
+        
         Skeleton skeleton = new Skeleton();
         skeleton.setBoneList(boneList);
-
+        
         return skeleton;
     }
 
+    /**
+     * Loads an Animation object from a file.
+     *
+     * @return The loaded Animation object.
+     * @throws FileNotFoundException
+     */
     private static Animation loadAnimation() throws FileNotFoundException {
         File file = new File("src/main/resources/test.animation");
         FileReader fileReader = new FileReader(file);
-
+        
         Yaml yaml = new Yaml();
         HashMap<Integer, HashMap<String, Integer>> fileMap = (HashMap<Integer, HashMap<String, Integer>>) yaml.load(fileReader);
-
+        
         Animation animation = new Animation();
         animation.setKeyFrameList(fileMap);
-
+        
         return animation;
     }
 }

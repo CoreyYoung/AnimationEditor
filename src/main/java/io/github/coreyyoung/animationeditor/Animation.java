@@ -69,10 +69,8 @@ public class Animation {
                 if (frame1 == null || frame.getTime() > frame1.getTime()) {
                     frame1 = frame;
                 }
-            } else {
-                if (frame2 == null || frame.getTime() < frame2.getTime()) {
-                    frame2 = frame;
-                }
+            } else if (frame2 == null || frame.getTime() < frame2.getTime()) {
+                frame2 = frame;
             }
         }
 
