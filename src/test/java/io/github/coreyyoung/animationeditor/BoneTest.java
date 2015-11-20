@@ -1,11 +1,8 @@
 package io.github.coreyyoung.animationeditor;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.control.TreeItem;
-import javax.swing.JFrame;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -31,18 +28,7 @@ public class BoneTest {
     public void testDrawBone() {
         System.out.println("drawBone");
 
-        JFrame frame = new JFrame();
-        frame.setVisible(true);
-
-        Graphics graphics = frame.getGraphics();
-        Graphics2D g2d = (Graphics2D) graphics;
-        int x = 0;
-        int y = 0;
-        int dir = 0;
-        Bone bone = new Bone("Test", 0);
-        bone.childList.add(new Bone("Child", 0));
-
-        //bone.drawBone(g2d, x, y, dir);
+        //TODO Add test.
     }
 
     /**
