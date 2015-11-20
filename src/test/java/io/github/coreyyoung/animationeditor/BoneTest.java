@@ -4,9 +4,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.TreeItem;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.tree.DefaultMutableTreeNode;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class BoneTest {
     public void testSetDirection() {
         System.out.println("setDirection");
 
-        AnimationEditorGUI.DisplayFrame = new JInternalFrame();
+        //AnimationEditorGUI.DisplayFrame = new JInternalFrame();
         Bone bone = new Bone("Bone", 0);
         bone.setDirection(100);
         assert (bone.dir == 100);
@@ -43,7 +42,7 @@ public class BoneTest {
         Bone bone = new Bone("Test", 0);
         bone.childList.add(new Bone("Child", 0));
 
-        bone.drawBone(g2d, x, y, dir);
+        //bone.drawBone(g2d, x, y, dir);
     }
 
     /**
@@ -98,27 +97,20 @@ public class BoneTest {
 
         Bone parent = new Bone("Parent", 0);
         Bone child = new Bone("Child", 0);
-        parent.childList.add(child);
         Bone grandChild = new Bone("GrandChild", 0);
         child.childList.add(grandChild);
+        parent.childList.add(child);
 
-        DefaultMutableTreeNode parentNode = new DefaultMutableTreeNode(parent.name);
-        DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child.name);
-        parentNode.add(childNode);
-        DefaultMutableTreeNode grandChildNode = new DefaultMutableTreeNode(grandChild.name);
-        childNode.add(grandChildNode);
+        TreeItem<String> parentNode = new TreeItem<>(parent.name);
+        TreeItem<String> childNode = new TreeItem<>(child.name);
+        TreeItem<String> grandChildNode = new TreeItem<>(grandChild.name);
+        childNode.getChildren().add(grandChildNode);
+        parentNode.getChildren().add(childNode);
 
-        String string1 = parentNode.toString();
-        String string2 = parent.getTreeBranch().toString();
-        assert (string1.equals(string2));
+        assert (parentNode.toString().equals(parent.getTreeBranch().toString()));
+        assert (childNode.toString().equals(child.getTreeBranch().toString()));
+        assert (grandChildNode.toString().equals(grandChild.getTreeBranch().toString()));
 
-        string1 = parentNode.getFirstChild().toString();
-        string2 = parent.getTreeBranch().getFirstChild().toString();
-        assert (string1.equals(string2));
-
-        string1 = parentNode.getFirstLeaf().getFirstLeaf().toString();
-        string2 = parent.getTreeBranch().getFirstLeaf().getFirstLeaf().toString();
-        assert (string1.equals(string2));
     }
 
     /**
@@ -128,26 +120,28 @@ public class BoneTest {
     public void testGetBoneMap() {
         System.out.println("getBoneMap");
 
-        Bone parent = new Bone("Parent", 0);
-        Bone child = new Bone("Child", 90);
+        String path = "src/main/resources/data/Bone.png";
+
+        Bone parent = new Bone("Parent", path, 0);
+        Bone child = new Bone("Child", path, 90);
         parent.childList.add(child);
-        Bone grandChild = new Bone("GrandChild", 311);
+        Bone grandChild = new Bone("GrandChild", path, 311);
         child.childList.add(grandChild);
 
         HashMap<String, Object> parentMap = new HashMap<>();
         parentMap.put("Name", "Parent");
         parentMap.put("Direction", 0);
-        parentMap.put("Image Path", "src/main/resources/data/Bone.png");
+        parentMap.put("Image Path", path);
 
         HashMap<String, Object> childMap = new HashMap<>();
         childMap.put("Name", "Child");
         childMap.put("Direction", 90);
-        childMap.put("Image Path", "src/main/resources/data/Bone.png");
+        childMap.put("Image Path", path);
 
         HashMap<String, Object> grandChildMap = new HashMap<>();
         grandChildMap.put("Name", "GrandChild");
         grandChildMap.put("Direction", 311);
-        grandChildMap.put("Image Path", "src/main/resources/data/Bone.png");
+        grandChildMap.put("Image Path", path);
 
         ArrayList<HashMap> childList = new ArrayList<>();
         grandChildMap.put("Child Map", childList);

@@ -169,6 +169,9 @@ public class Skeleton {
 
         root.setExpanded(true);
 
-        return new TreeView<>(root);
+        TreeView<String> treeView = new TreeView<>();
+        treeView.setRoot(root);
+
+        return treeView;
     }
 }

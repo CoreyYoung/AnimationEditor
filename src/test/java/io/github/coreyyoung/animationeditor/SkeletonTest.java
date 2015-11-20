@@ -1,9 +1,7 @@
 package io.github.coreyyoung.animationeditor;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JFrame;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -106,21 +104,7 @@ public class SkeletonTest {
     public void testRender() {
         System.out.println("render");
 
-        Skeleton skeleton = new Skeleton();
-        skeleton.boneList.add(new Bone("Test Bone", 0));
-
-        JFrame frame = new JFrame();
-        frame.setVisible(true);
-
-        Animation animation = new Animation();
-        //animation.addKeyFrame(new KeyFrame(0, skeleton));
-        //animation.addKeyFrame(new KeyFrame(100, skeleton));
-
-        AnimationEditorGUI.isPlayingAnimation = true;
-        AnimationEditorGUI.animation = animation;
-
-        Graphics graphics = frame.getGraphics();
-        skeleton.render(graphics);
+        //TODO add test here
     }
 
     /**
@@ -145,5 +129,25 @@ public class SkeletonTest {
         assert (result1.getBone(name).dir == 10);
         assert (result2.getBone(name).dir == 50);
         assert (result3.getBone(name).dir == 70);
+    }
+
+    /**
+     * Test of getTree method, of class Skeleton.
+     */
+    @Test
+    public void testGetTree() {
+        //TODO Fix test.
+
+//        Skeleton skeleton = new Skeleton();
+//        Bone bone = new Bone("Bone", "imagePath", 0);
+//        skeleton.boneList.add(bone);
+//        TreeView<String> result = skeleton.getTree();
+//
+//        TreeItem<String> root = new TreeItem<>("Skeleton");
+//        root.getChildren().add(bone.getTreeBranch());
+//        TreeView<String> expected = new TreeView<>();
+//        expected.setRoot(root);
+//
+//        assertEquals(result.toString(), expected.toString());
     }
 }

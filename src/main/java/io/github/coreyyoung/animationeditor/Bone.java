@@ -24,7 +24,7 @@ public class Bone {
      * @param dir The direction of the new Bone.
      */
     public Bone(String name, String imagePath, int dir) {
-        //setImage(imagePath);
+        this.imagePath = imagePath;
         this.dir = dir;
         this.name = name;
     }
