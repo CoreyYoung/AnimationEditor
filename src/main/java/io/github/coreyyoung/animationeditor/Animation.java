@@ -53,13 +53,14 @@ public class Animation {
     }
 
     /**
-     * Gets a Skeleton for a given time by interpolating KeyFrames.
+     * Gets a transforms HashMap<String, Integer> for a given time by
+     * interpolating KeyFrames.
      *
-     * @param time The time to get the Skeleton for.
-     * @return The Skeleton for the given time.
+     * @param time The time to get the transforms for.
+     * @return The transforms HashMap<String, Integer> for the given time.
      */
-    public Skeleton getInterpolatedSkeleton(long time) {
-        Skeleton skeleton = null;
+    public HashMap<String, Integer> getInterpolatedTransforms(long time) {
+        HashMap<String, Integer> transforms = new HashMap<>();
         KeyFrame frame1 = null;
         KeyFrame frame2 = null;
 
@@ -81,10 +82,16 @@ public class Animation {
             double position = time - frame1.getTime();
             double amount = (position / duration);
 
-            //skeleton = frame1.getSkeleton().getInterpolatedSkeleton(frame2.getSkeleton(), amount);
+            for (String key : frame1.getTransforms().keySet()) {
+                int dir1 = frame1.getTransforms().get(key);
+                int dir2 = frame2.getTransforms().get(key);
+                int currentDir = dir1 + (int) ((dir2 - dir1) * amount);
+
+                transforms.put(key, currentDir);
+            }
         }
 
-        return skeleton;
+        return transforms;
     }
 
     public void setKeyFrameList(HashMap<Integer, HashMap<String, Integer>> frameMap) {
